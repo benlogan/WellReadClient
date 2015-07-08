@@ -1,0 +1,57 @@
+body {
+    font-family: "Lucida Grande";
+    'font-size: 50px;
+}
+
+input, textarea, select, h1, h2{font-family:inherit;}
+
+.vote-up-off {
+    height: 30px;
+    width: 40px;
+    display: block;
+    margin: 0 auto;
+    background-image: url("../images/sprites.svg");
+    background-position: 0 -170px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    ext-indent: -9999em;
+    'font-size: 1px;
+    cursor: pointer;
+    'text-align: center;
+}
+
+.vote-down-off {
+    height: 30px;
+    width: 40px;
+    display: block;
+    margin: 0 auto;
+    background-image: url("../images/sprites.svg");
+    background-position: 0 -220px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    ext-indent: -9999em;
+    cursor: pointer;
+}
+
+.star-off {
+    height: 30px;
+    width: 40px;
+    display: block;
+    margin: 0 auto;
+    background-image: url("../images/sprites.svg");
+    background-position: 0 -120px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    ext-indent: -9999em;
+    cursor: pointer;
+}
+
+a {
+  color: #07c;
+  text-decoration: none;
+}
+
+.bookCoverImage {
+    float: left;
+    width: 100px;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Well Read</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles/style.css" type="text/css"/>
+        <link rel="stylesheet" href="styles/jquery-ui.css" type="text/css"/>
+        <script type="text/javascript" src="scripts/jquery/jquery-2.1.4.js"></script>
+        <script type="text/javascript" src="scripts/jquery/jquery-ui.js"></script>
+        <script type="text/javascript" src="scripts/main.js"></script>
+    </head>
+    <body>
+        
+        <!-- Using jQuery UI, but we could consider bootstrap etc -->
+        <div class="ui-widget">
+            <!--<label for="search">Search: </label>-->
+            <form action="server.php" method="GET">
+                <input id="search">
+                <input type="submit" value="Search">
+            </form>
+        </div>
+        
+        <div>
+            <img class="bookCoverImage" src="images/51f6u5F2sdL.jpg">
+            <h1>Freakonomics</h1>
+            <h5>Buy this book : Amazon    Waterstones     Barnes &amp; Noble</h5>
+        </div>
+        
+    <table>
+        <tbody>
+            <tr>
+                <td class="votecell">
+                    <div class="vote">
+                        <a class="vote-up-off"></a>
+                        <span itemprop="upvoteCount" class="vote-count-post ">0</span>
+                        <a class="vote-down-off"></a>
+                        <a class="star-off"></a>    
+                    </div>
+                </td>
+                <td class="postcell">
+                    <div class="post-text" itemprop="text">
+                        <p>More Than 4 Million Copies Sold Worldwide<br>Published in 35 Languages</p><p>Which is more dangerous, a gun or a swimming pool?<br>What do schoolteachers and sumo wrestlers have in common?<br>How much do parents really matter?</p><p>These may not sound like typical questions for an economist to ask. But Steven D. Levitt is not a typical economist. He studies the riddles of everyday life—from cheating and crime to parenting and sports—and reaches conclusions that turn conventional wisdom on its head. Freakonomics is a groundbreaking collaboration between Levitt and Stephen J. Dubner, an award-winning author and journalist. They set out to explore the inner workings of a crack gang, the truth about real estate agents, the secrets of the Ku Klux Klan, and much more. Through forceful storytelling and wry insight, they show that economics is, at root, the study of incentives—how people get what they want or need, especially when other people want or need the same thing.</p>
+                    </div>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+        </tbody>
+    </table>
+    
+    <h2>Your Summary</h2>
+        <form>
+            <textarea maxlength="250" rows="5" cols="100"></textarea>
+            <input id="submit-button" type="submit" value="Post Your Summary" tabindex="110">
+        </form>
+    </body>
+</html>

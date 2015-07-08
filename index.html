@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Well Read</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles/style.css" type="text/css"/>
+        <link rel="stylesheet" href="styles/jquery-ui.css" type="text/css"/>
+        <script type="text/javascript" src="scripts/jquery/jquery-2.1.4.js"></script>
+        <script type="text/javascript" src="scripts/jquery/jquery-ui.js"></script>
+        <script type="text/javascript" src="scripts/main.js"></script>
+    </head>
+    <body>
+        
+        <!-- Using jQuery UI, but we could consider bootstrap etc -->
+        <div class="ui-widget">
+            <!--<label for="search">Search: </label>-->
+            <form action="server.php" method="GET">
+                <input id="search">
+                <input type="submit" value="Search">
+            </form>
+        </div>
+        
+        <div>
+            <img id='bookImage' class="bookCoverImage"><!-- src="images/51f6u5F2sdL.jpg">-->
+            <h1 id='bookTitle'></h1>
+            <h3 id='bookAuthor'></h1>
+            <h3 id='bookPublisher'></h1>
+            <h3 id='bookISBN'></h1>
+        </div>
+    </body>
+</html>
