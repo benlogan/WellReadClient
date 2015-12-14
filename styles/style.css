@@ -1,6 +1,13 @@
 body {
     font-family: "Lucida Grande";
     'font-size: 50px;
+    width: 960px; 
+    margin: 0 auto;
+}
+
+#searchBox {
+    width: 250px;
+    margin: 0 auto;
 }
 
 input, textarea, select, h1, h2{font-family:inherit;}
@@ -53,5 +60,5 @@ a {
 
 .bookCoverImage {
     float: left;
-    width: 100px;
+    width: 150px;
 }

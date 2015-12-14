@@ -13,14 +13,21 @@
     <body>
         
         <!-- Using jQuery UI, but we could consider bootstrap etc -->
-        <div class="ui-widget">
+        <div id='searchBox' class="ui-widget">
             <!--<label for="search">Search: </label>-->
+            
+            <!--
             <form action="server.php" method="GET">
                 <input id="search">
                 <input type="submit" value="Search">
             </form>
+            -->
+
+            <h5>Search for a book...</h5>
+            <input id="search">
         </div>
         
+        <!-- Book Summary -->
         <div>
             <img id='bookImage' class="bookCoverImage"><!-- src="images/51f6u5F2sdL.jpg">-->
             <h1 id='bookTitle'></h1>
@@ -28,5 +35,40 @@
             <h3 id='bookPublisher'></h1>
             <h3 id='bookISBN'></h1>
         </div>
+        
+        <!-- Table of Lessons -->
+        <div id='summaryTable' hidden="true">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="votecell">
+                            <div class="vote">
+                                <a class="vote-up-off"></a>
+                                <span itemprop="upvoteCount" class="vote-count-post ">0</span>
+                                <a class="vote-down-off"></a>
+                                <a class="star-off"></a>    
+                            </div>
+                        </td>
+                        <td class="postcell">
+                            <div class="post-text" itemprop="text">
+                                <p>blah blah blah</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr></tr>
+                    <tr></tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- User Input -->
+        <div id='summaryInput' hidden="true">
+            <h2>Your Summary</h2>
+            <form id="SummaryText" onsubmit="return writeSummaryInput();">
+                <textarea id="SummaryTextArea" maxlength="250" rows="5" cols="100"></textarea>
+                <input id="submit-button" type="submit" value="Post Your Summary" tabindex="110">
+            </form>
+        </div>
+        
     </body>
 </html>

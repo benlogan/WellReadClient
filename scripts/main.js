@@ -2,8 +2,7 @@ $(function() {
     /*
     var availableTags = [
         "Freakonomics",
-        "SuperFreakonomics",
-        "Think Like a Freak"
+        "SuperFreakonomics"
     ];
     */
     
@@ -71,11 +70,35 @@ function getBookDetails(isbn) {
             var obj = JSON.parse(data);
             
             // pass it straight to the page?
-            $('#bookTitle').html(obj.title);
-            $('#bookAuthor').html(obj.author);
-            $('#bookPublisher').html(obj.publisher);
-            $('#bookISBN').html(obj.isbn);
-            $('#bookImage').attr('src', obj.image);
+            $('#bookTitle').html(obj.book.title);
+            $('#bookAuthor').html(obj.book.author);
+            $('#bookPublisher').html(obj.book.publisher);
+            $('#bookISBN').html(obj.book.isbn);
+            $('#bookImage').attr('src', obj.book.image);
+            
+            $('#summaryInput').show(); //jquery for show/hide!
+            $('#summaryTable').show();
+            
+            $('#SummaryTextArea').text(obj.summary.text);
+            
+            $('#search').val(''); //jquery clear input
         }
     });
+}
+
+function writeSummaryInput() {
+    //var summary = $('SummaryTextArea').val(); // use jquery to fetch value
+    var summary = document.forms["SummaryText"]["SummaryTextArea"].value;
+    console.log("About to POST data : " + summary);
+    $.ajax({
+        url: 'http://127.0.0.1:1337',
+        type: 'POST',
+        data: 'summary=' + summary + '&isbn=' + $('#bookISBN').text(),
+        success: function(data) {
+            console.log("POST Summary Response : " + data);
+            
+            var obj = JSON.parse(data);
+        }
+    });
+    // update summaries after!
 }
