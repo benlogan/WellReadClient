@@ -31,15 +31,16 @@
         <div>
             <img id='bookImage' class="bookCoverImage"><!-- src="images/51f6u5F2sdL.jpg">-->
             <h1 id='bookTitle'></h1>
-            <h3 id='bookAuthor'></h1>
-            <h3 id='bookPublisher'></h1>
-            <h3 id='bookISBN'></h1>
+            <h3 id='bookAuthor'></h3>
+            <h3 id='bookPublisher'></h3>
+            <h3 id='bookISBN'></h3>
         </div>
         
         <!-- Table of Lessons -->
-        <div id='summaryTable' hidden="true">
-            <table>
+        <div id='summaryTableDiv' hidden="true">
+            <table id='summaryTable'>
                 <tbody>
+                    <!--
                     <tr>
                         <td class="votecell">
                             <div class="vote">
@@ -50,13 +51,10 @@
                             </div>
                         </td>
                         <td class="postcell">
-                            <div class="post-text" itemprop="text">
-                                <p>blah blah blah</p>
-                            </div>
+                            <div class="post-text" itemprop="text"/>
                         </td>
                     </tr>
-                    <tr></tr>
-                    <tr></tr>
+                    -->
                 </tbody>
             </table>
         </div>
@@ -64,7 +62,7 @@
         <!-- User Input -->
         <div id='summaryInput' hidden="true">
             <h2>Your Summary</h2>
-            <form id="SummaryText" onsubmit="return writeSummaryInput();">
+            <form id="SummaryText"> <!-- onsubmit="return writeSummaryInput();" -->
                 <textarea id="SummaryTextArea" maxlength="250" rows="5" cols="100"></textarea>
                 <input id="submit-button" type="submit" value="Post Your Summary" tabindex="110">
             </form>

@@ -71,23 +71,54 @@ function getBookDetails(isbn) {
             
             // pass it straight to the page?
             $('#bookTitle').html(obj.book.title);
-            $('#bookAuthor').html(obj.book.author);
+            
+            var authorList = '';
+            if(Array.isArray(obj.book.author)) {
+                $.each(obj.book.author, function(key, val) {
+                    //$('#bookAuthor').append(val + ', ');
+                    // generally avoid append, because it causes problems for subsequent searches (without page refresh)
+                    authorList += (val + ', ');
+                });
+                if(authorList.endsWith(', ')) {
+                    authorList = authorList.substring(0, authorList.length - 2);
+                }
+            } else {
+                // single author, non array
+                authorList = obj.book.author;
+            }
+            $('#bookAuthor').html(authorList);
+            
             $('#bookPublisher').html(obj.book.publisher);
             $('#bookISBN').html(obj.book.isbn);
             $('#bookImage').attr('src', obj.book.image);
             
             $('#summaryInput').show(); //jquery for show/hide!
-            $('#summaryTable').show();
-            
-            $('#SummaryTextArea').text(obj.summary.text);
+            $('#summaryTableDiv').show();
+        
+            if(Array.isArray(obj.summaryList)) {
+                var summaryRowsHtml = '';
+                $.each(obj.summaryList, function(key, val) {
+                    //$('.post-text').html(val); // FIXME should probably not be a class identifier!
+
+                    //var html = createSummaryTableRow(val.text);
+                    //$('#summaryTable').append(html);
+                    summaryRowsHtml += createSummaryTableRow(val.text);
+                });
+                $('#summaryTable').html(summaryRowsHtml);
+            }
             
             $('#search').val(''); //jquery clear input
+            $('#SummaryTextArea').val('');
         }
     });
 }
 
+function createSummaryTableRow(summaryText) {
+    return "<tr><td class='votecell'><div class='vote'><a class='vote-up-off'></a><span itemprop='upvoteCount' class='vote-count-post '>0</span><a class='vote-down-off'></a><a class='star-off'></a></div></td><td class='postcell'><div class='post-text' itemprop='text'/>" + summaryText + "</td></tr>";
+}
+
+/*
 function writeSummaryInput() {
-    //var summary = $('SummaryTextArea').val(); // use jquery to fetch value
     var summary = document.forms["SummaryText"]["SummaryTextArea"].value;
     console.log("About to POST data : " + summary);
     $.ajax({
@@ -96,9 +127,29 @@ function writeSummaryInput() {
         data: 'summary=' + summary + '&isbn=' + $('#bookISBN').text(),
         success: function(data) {
             console.log("POST Summary Response : " + data);
-            
             var obj = JSON.parse(data);
         }
     });
-    // update summaries after!
 }
+*/
+
+// new way of writing/posting summaries
+$(document).on('submit', '#SummaryText', function(e) {
+    var summary = $('#SummaryTextArea').val(); // use jquery to fetch value
+    console.log("About to POST data (NEW) : " + summary);
+     $.ajax({
+        url: 'http://127.0.0.1:1337',
+        type: 'POST',
+        data: 'summary=' + summary + '&isbn=' + $('#bookISBN').text(),
+        success: function(data) {
+            console.log("POST Summary Response : " + data);
+            //var obj = JSON.parse(data);
+        }
+    });
+    e.preventDefault(); // don't navigate away!
+    
+    // FIXME update page/summaries after!
+    //getBookDetails($('#bookISBN').text()); // cheating a bit, but a full refresh? DB won't necessarily have updated in time!
+    $('#summaryTable').append(createSummaryTableRow(summary));
+    $('#SummaryTextArea').val('');
+});
