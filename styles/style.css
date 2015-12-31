@@ -1,6 +1,6 @@
 body {
     font-family: "Lucida Grande";
-    'font-size: 50px;
+    /*font-size: 50px;*/
     width: 960px; 
     margin: 0 auto;
 }
@@ -8,6 +8,28 @@ body {
 #searchBox {
     width: 250px;
     margin: 0 auto;
+}
+
+#bookBox {
+    width: 50%;
+    margin: 0 auto;
+}
+
+#bookMetadata {
+    /*display:inline-block;
+    padding-left:10px;*/
+    margin-left: 150px;
+}
+
+#summaryInput {
+    /* its already in a 50% div!
+    width: 50%;*/
+    margin: 0 auto;
+}
+
+#SummaryTextArea {
+    font-size: 16px;
+    width: 100%;
 }
 
 input, textarea, select, h1, h2{font-family:inherit;}
@@ -22,9 +44,9 @@ input, textarea, select, h1, h2{font-family:inherit;}
     background-repeat: no-repeat;
     overflow: hidden;
     ext-indent: -9999em;
-    'font-size: 1px;
     cursor: pointer;
-    'text-align: center;
+    /*font-size: 1px;
+    'text-align: center;*/
 }
 
 .vote-down-off {
@@ -60,5 +82,5 @@ a {
 
 .bookCoverImage {
     float: left;
-    width: 150px;
+    width: 100px;
 }

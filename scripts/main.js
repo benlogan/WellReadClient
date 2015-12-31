@@ -67,6 +67,8 @@ function getBookDetails(isbn) {
         success: function(data) {
             console.log("Search Response (ISBN) : " + data);
             
+            // FIXME really need to properly clear all fields
+
             var obj = JSON.parse(data);
             
             // pass it straight to the page?
@@ -95,6 +97,7 @@ function getBookDetails(isbn) {
             $('#summaryInput').show(); //jquery for show/hide!
             $('#summaryTableDiv').show();
         
+            $('#summaryTable').html('');
             if(Array.isArray(obj.summaryList)) {
                 var summaryRowsHtml = '';
                 $.each(obj.summaryList, function(key, val) {
@@ -102,7 +105,7 @@ function getBookDetails(isbn) {
 
                     //var html = createSummaryTableRow(val.text);
                     //$('#summaryTable').append(html);
-                    summaryRowsHtml += createSummaryTableRow(val.text);
+                    summaryRowsHtml += createSummaryTableRow(val.id, val.text);
                 });
                 $('#summaryTable').html(summaryRowsHtml);
             }
@@ -113,9 +116,27 @@ function getBookDetails(isbn) {
     });
 }
 
-function createSummaryTableRow(summaryText) {
-    return "<tr><td class='votecell'><div class='vote'><a class='vote-up-off'></a><span itemprop='upvoteCount' class='vote-count-post '>0</span><a class='vote-down-off'></a><a class='star-off'></a></div></td><td class='postcell'><div class='post-text' itemprop='text'/>" + summaryText + "</td></tr>";
+function createSummaryTableRow(summaryID, summaryText) {
+    //<input type="hidden" name="_id_" value="34547563">
+    return "<tr><td class='votecell'><div class='vote'><input type='hidden' name='_id_' value=" + summaryID + "><a id='voteUp' class='vote-up-off'></a><span itemprop='upvoteCount' class='vote-count-post '>0</span><a id='voteDown' class='vote-down-off'></a><a class='star-off'></a></div></td><td class='postcell'><div class='post-text' itemprop='text'/>" + summaryText + "</td></tr>";
 }
+
+// won't be applied for future items added to the page dynamically!
+//$("#voteUp").click(function() {
+//    alert("Vote Up!");
+//});
+$(document).on("click", '#summaryTable', function(e) {
+//$("#summaryTable").on( "click", function() {
+    if(e.target.id == "voteUp") {
+        alert("Vote Up! ID : " + e.target.parentNode.children[0].value); 
+        // e.target.previousSibling.value
+        // slighty hacky way of getting hold of the hidden input value (ID)
+    } else if(e.target.id == "voteDown") {
+        alert("Vote Down! ID : " + e.target.parentNode.children[0].value);
+    }
+    // FIXME apply the vote, via a new post call
+    // going to need auth soon, so that we can enforce only voting once!
+});
 
 /*
 function writeSummaryInput() {
@@ -135,6 +156,7 @@ function writeSummaryInput() {
 
 // new way of writing/posting summaries
 $(document).on('submit', '#SummaryText', function(e) {
+    var id = 999; // FIXME doesn't exist in DB yet!!
     var summary = $('#SummaryTextArea').val(); // use jquery to fetch value
     console.log("About to POST data (NEW) : " + summary);
      $.ajax({
@@ -150,6 +172,6 @@ $(document).on('submit', '#SummaryText', function(e) {
     
     // FIXME update page/summaries after!
     //getBookDetails($('#bookISBN').text()); // cheating a bit, but a full refresh? DB won't necessarily have updated in time!
-    $('#summaryTable').append(createSummaryTableRow(summary));
+    $('#summaryTable').append(createSummaryTableRow(id, summary));
     $('#SummaryTextArea').val('');
 });

@@ -27,46 +27,50 @@
             <input id="search">
         </div>
         
-        <!-- Book Summary -->
-        <div>
-            <img id='bookImage' class="bookCoverImage"><!-- src="images/51f6u5F2sdL.jpg">-->
-            <h1 id='bookTitle'></h1>
-            <h3 id='bookAuthor'></h3>
-            <h3 id='bookPublisher'></h3>
-            <h3 id='bookISBN'></h3>
+        <div id="bookBox">
+            <!-- Book Summary -->
+            <div>
+                <img id='bookImage' class="bookCoverImage"><!-- src="images/51f6u5F2sdL.jpg">-->
+            </div>
+            <div id='bookMetadata'>
+                <h2 id='bookTitle'></h2>
+                <h3 id='bookAuthor'></h3>
+                <h5 id='bookPublisher'></h5>
+                <h5 id='bookISBN'></h5>
+            </div>
+            
+            <!-- Table of Lessons -->
+            <div id='summaryTableDiv' hidden="true">
+                <table id='summaryTable'>
+                    <tbody>
+                        <!--
+                        <tr>
+                            <td class="votecell">
+                                <div class="vote">
+                                    <a class="vote-up-off"></a>
+                                    <span itemprop="upvoteCount" class="vote-count-post ">0</span>
+                                    <a class="vote-down-off"></a>
+                                    <a class="star-off"></a>    
+                                </div>
+                            </td>
+                            <td class="postcell">
+                                <div class="post-text" itemprop="text"/>
+                            </td>
+                        </tr>
+                        -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- User Input -->
+            <div id='summaryInput' hidden="true">
+                <h5>Add your own summary...</h5>
+                <form id="SummaryText"> <!-- onsubmit="return writeSummaryInput();" -->
+                    <!-- style using normal sizes, otherwise font size changes things rows="5" cols="100"-->
+                    <textarea id="SummaryTextArea" maxlength="250"></textarea>
+                    <input id="submit-button" type="submit" value="Submit" tabindex="110">
+                </form>
+            </div>
         </div>
-        
-        <!-- Table of Lessons -->
-        <div id='summaryTableDiv' hidden="true">
-            <table id='summaryTable'>
-                <tbody>
-                    <!--
-                    <tr>
-                        <td class="votecell">
-                            <div class="vote">
-                                <a class="vote-up-off"></a>
-                                <span itemprop="upvoteCount" class="vote-count-post ">0</span>
-                                <a class="vote-down-off"></a>
-                                <a class="star-off"></a>    
-                            </div>
-                        </td>
-                        <td class="postcell">
-                            <div class="post-text" itemprop="text"/>
-                        </td>
-                    </tr>
-                    -->
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- User Input -->
-        <div id='summaryInput' hidden="true">
-            <h2>Your Summary</h2>
-            <form id="SummaryText"> <!-- onsubmit="return writeSummaryInput();" -->
-                <textarea id="SummaryTextArea" maxlength="250" rows="5" cols="100"></textarea>
-                <input id="submit-button" type="submit" value="Post Your Summary" tabindex="110">
-            </form>
-        </div>
-        
     </body>
 </html>
