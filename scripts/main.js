@@ -31,7 +31,8 @@ function autoCompleteFromServer(request, response) {
     //http://127.0.0.1:1337/?q=freak
     
     $.ajax({
-        url: 'http://127.0.0.1:1337',
+        //url: 'http://127.0.0.1:1337',
+        url: 'http://wellreadserver.herokuapp.com',
         type: 'GET',
         data: 'q=' + searchTerm,
         success: function(data) {
@@ -61,7 +62,8 @@ function autoCompleteFromServer(request, response) {
 
 function getBookDetails(isbn) { 
     $.ajax({
-        url: 'http://127.0.0.1:1337',
+        //url: 'http://127.0.0.1:1337',
+        url: 'http://wellreadserver.herokuapp.com',
         type: 'GET',
         data: 'ISBN=' + isbn,
         success: function(data) {
@@ -160,7 +162,8 @@ $(document).on('submit', '#SummaryText', function(e) {
     var summary = $('#SummaryTextArea').val(); // use jquery to fetch value
     console.log("About to POST data (NEW) : " + summary);
      $.ajax({
-        url: 'http://127.0.0.1:1337',
+        //url: 'http://127.0.0.1:1337',
+        url: 'http://wellreadserver.herokuapp.com',
         type: 'POST',
         data: 'summary=' + summary + '&isbn=' + $('#bookISBN').text(),
         success: function(data) {
