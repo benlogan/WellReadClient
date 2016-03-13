@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="scripts/oauth.js"></script>
+    <script type="text/javascript">
+        OAuth.initialize('DONT COMMIT');
+
+        function authTwitter() {
+            //Using popup
+            OAuth.popup('twitter').done(function(result) {
+                //use result.access_token in your API request 
+                //or use result.get|post|put|del|patch|me methods (see below)
+                result.get('/1.1/account/verify_credentials.json').done(function(data) {
+                    console.log(data);
+                    alert('Hello ' + data.name);
+                    //jquery append text to div!
+                    
+                    // todo, still need to add email to twitter.
+                    authUser(data.id, data.name, null);
+                })
+            })
+            .fail(function (err) {
+                //handle error with err
+                console.error("ERROR : " + err);
+            });
+        }
+        
+        function authFacebook() {
+            OAuth.popup('facebook').done(function(result) {
+                result.me().done(function(data) {
+                    // do something with `data`, e.g. print data.name
+                    console.log(data);
+                    alert('Hello ' + data.name);
+                    
+                    authUser(data.id, data.name, data.email);
+                })
+            })
+        }
+        
+        function authGoogle() {
+            OAuth.popup('google').done(function(result) {
+                result.me().done(function(data) {
+                    // do something with `data`, e.g. print data.name
+                    console.log(data);
+                    alert('Hello ' + data.name);
+                    
+                    authUser(data.id, data.name, data.email);
+                })
+                
+                /*
+                result.get('/1.1/account/verify_credentials.json').done(function(data) {
+                    console.log(data);
+                    alert('Hello ' + data.name);
+                })
+                */
+                
+                //console.log(result)
+                // do some stuff with result
+            })
+        }
+        
+        function authUser(uniqueUserID, name, email) {
+            // check if this user is already in the db
+            if(userExists(uniqueUserID)) {
+                // anything to do?
+            }
+            else {
+                newUser(uniqueUserID, name, email);
+            }
+        }
+        
+        function userExists(uniqueUserID) {
+            // do we have a record in the DB? true/false
+            // TODO GET request for user details
+            return false;
+        }
+        
+        function newUser(uniqueUserID, name, email) {
+            // doesnt exist in our database, create
+            // store the auth source too, google or twitter?
+            console.log("Creating new user! ID: " + uniqueUserID + " Name: " + name + " Email: " + email);
+            // TODO POST request for setting up new user
+            
+        }
+	</script>
+</head>
+<body>
+	<h1>Auth Testing</h1>
+    
+    <button onclick="authTwitter()">Auth via Twitter</button>
+    <button onclick="authFacebook()">Auth via Facebook</button>
+    <button onclick="authGoogle()">Auth via Google</button>
+
+    <!-- do we really need to return the name to screen? -->
+    <div id="username"></div>
+    
+</body>
+</html>

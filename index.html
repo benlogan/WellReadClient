@@ -14,24 +14,16 @@
         
         <!-- Using jQuery UI, but we could consider bootstrap etc -->
         <div id='searchBox' class="ui-widget">
+            <h1 class="centeredText">WellRead</h1>
             <!--<label for="search">Search: </label>-->
-            
-            <!--
-            <form action="server.php" method="GET">
-                <input id="search">
-                <input type="submit" value="Search">
-            </form>
-            -->
 
-            <h5>Search for a book...</h5>
+            <h5 class="centeredText">Search for a book...</h5>
             <input id="search">
         </div>
         
         <div id="bookBox">
             <!-- Book Summary -->
-            <div>
-                <img id='bookImage' class="bookCoverImage"><!-- src="images/51f6u5F2sdL.jpg">-->
-            </div>
+            <img id='bookImage' class="bookCoverImage">
             <div id='bookMetadata'>
                 <h2 id='bookTitle'></h2>
                 <h3 id='bookAuthor'></h3>
@@ -39,7 +31,7 @@
                 <h5 id='bookISBN'></h5>
             </div>
             
-            <!-- Table of Lessons -->
+            <!-- Table of Summaries -->
             <div id='summaryTableDiv' hidden="true">
                 <table id='summaryTable'>
                     <tbody>

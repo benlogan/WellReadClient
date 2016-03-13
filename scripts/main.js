@@ -1,11 +1,4 @@
 $(function() {
-    /*
-    var availableTags = [
-        "Freakonomics",
-        "SuperFreakonomics"
-    ];
-    */
-    
     $( "#search" ).autocomplete({
         minLength: 3,
         delay: 800,
@@ -18,7 +11,7 @@ $(function() {
             getBookDetails(isbn);
         }
     });
-  });
+});
 
 //https://api.jqueryui.com/autocomplete/#option-source
 function autoCompleteFromServer(request, response) {
@@ -120,7 +113,7 @@ function getBookDetails(isbn) {
 
 function createSummaryTableRow(summaryID, summaryText) {
     //<input type="hidden" name="_id_" value="34547563">
-    return "<tr><td class='votecell'><div class='vote'><input type='hidden' name='_id_' value=" + summaryID + "><a id='voteUp' class='vote-up-off'></a><span itemprop='upvoteCount' class='vote-count-post '>0</span><a id='voteDown' class='vote-down-off'></a><a class='star-off'></a></div></td><td class='postcell'><div class='post-text' itemprop='text'/>" + summaryText + "</td></tr>";
+    return "<tr><td class='votecell'><div class='vote'><input type='hidden' name='_id_' value=" + summaryID + "><a id='voteUp' class='vote-up-off'></a><span itemprop='upvoteCount' class='vote-count-post '>0</span><a id='voteDown' class='vote-down-off'></a><a class='star-off'></a></div></td><td class='postcell'>" + summaryText + "</td></tr>";
 }
 
 // won't be applied for future items added to the page dynamically!
