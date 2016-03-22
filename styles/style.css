@@ -49,6 +49,13 @@ body {
 
 input, textarea, select, h1, h2{font-family:inherit;}
 
+/*
+#authBox {
+    width: 250px;
+    margin: 0 auto;
+}
+*/
+
 #voteCount {
     text-align: center;
     margin: auto;
@@ -103,4 +110,25 @@ a {
 .bookCoverImage {
     float: left;
     width: 100px;
+}
+
+#lean_overlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
+}
+
+/* Modal box or Popup box */
+.popupContainer{
+	position:absolute;
+	width:330px;
+	height: auto;
+	left:45%;
+	top:80px;
+	background: #FFF;
 }
