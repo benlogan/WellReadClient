@@ -1,16 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Well Read</title>
+        <title>WellRead</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles/style.css" type="text/css"/>
+        
+        <!-- Auth Styles -->
+        <link rel="stylesheet" href="styles/bootstrap.css" type="text/css"/>
+        <link rel="stylesheet" href="styles/bootstrap-social.css" type="text/css"/>
+        <link rel="stylesheet" href="styles/font-awesome.css" type="text/css"/>
+        
         <link rel="stylesheet" href="styles/jquery-ui.css" type="text/css"/>
+        <link rel="stylesheet" href="styles/style.css" type="text/css"/>
+        
         <script type="text/javascript" src="scripts/jquery/jquery-2.1.4.js"></script>
         <script type="text/javascript" src="scripts/jquery/jquery-ui.js"></script>
         <script type="text/javascript" src="scripts/main.js"></script>
+        <!-- Auth Scripts -->
+        <script type="text/javascript" src="scripts/jquery.leanModal.min.js"></script>
+        <script type="text/javascript" src="scripts/oauth.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#loginOrName").leanModal();//({ top : "50%" }); actually hacking this into the leanModal script, because it's not designed to take %'s on input!
+            });
+            
+            function editText() {
+                // experimenting with a larger area when editing, but not really urgent
+                /*
+                var width = $("#SummaryTextArea").width();
+                alert('editing text, width : ' + width);
+                if(width < 1000) {
+                    $("#SummaryTextArea").width('1000');
+                } else {
+                    $("#SummaryTextArea").width('200');
+                }
+                */
+            }
+        </script>
     </head>
     <body>
+        
+        <a id="loginOrName" href="#authBox" class="btn">Login</a>
+        
+        <div id="authBox" class="popupContainer" style="display: none">
+            <a class="btn btn-block btn-social btn-twitter" onclick="authTwitter()">
+                <span class="fa fa-twitter"></span> Sign in with Twitter
+            </a>
+            <a class="btn btn-block btn-social btn-facebook" onclick="authFacebook()">
+                <span class="fa fa-facebook"></span> Sign in with Facebook
+            </a>
+            <a class="btn btn-block btn-social btn-google" onclick="authGoogle()">
+                <span class="fa fa-google"></span> Sign in with Google
+            </a>
+        </div>
         
         <!-- Using jQuery UI, but we could consider bootstrap etc -->
         <div id='searchBox' class="ui-widget">
@@ -18,10 +60,10 @@
             <!--<label for="search">Search: </label>-->
 
             <h5 class="centeredText">Search for a book...</h5>
-            <input id="search">
+            <input id="search"> <!-- class="ui-autocomplete-input" -->
         </div>
         
-        <div id="bookBox">
+        <div id="bookBox" hidden="true">
             <!-- Book Summary -->
             <img id='bookImage' class="bookCoverImage">
             <div id='bookMetadata'>
@@ -32,7 +74,7 @@
             </div>
             
             <!-- Table of Summaries -->
-            <div id='summaryTableDiv' hidden="true">
+            <div id='summaryTableDiv'>
                 <table id='summaryTable'>
                     <tbody>
                         <!--
@@ -55,12 +97,12 @@
             </div>
             
             <!-- User Input -->
-            <div id='summaryInput' hidden="true">
+            <div id='summaryInput'>
                 <h5>Add your own summary...</h5>
                 <form id="SummaryText"> <!-- onsubmit="return writeSummaryInput();" -->
                     <!-- style using normal sizes, otherwise font size changes things rows="5" cols="100"-->
-                    <textarea id="SummaryTextArea" maxlength="250"></textarea>
-                    <input id="submit-button" type="submit" value="Submit" tabindex="110">
+                    <textarea id="SummaryTextArea" maxlength="5000" onclick="editText()"></textarea>
+                    <input id="submit-button" type="submit" value="Submit" tabindex="110" style="font-family: 'helvetica neue'">
                 </form>
             </div>
         </div>

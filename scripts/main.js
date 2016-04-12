@@ -89,8 +89,8 @@ function getBookDetails(isbn) {
             $('#bookISBN').html(obj.book.isbn);
             $('#bookImage').attr('src', obj.book.image);
             
-            $('#summaryInput').show(); //jquery for show/hide!
-            $('#summaryTableDiv').show();
+            // jquery show hidden div!
+            $('#bookBox').show();
         
             $('#summaryTable').html('');
             if(Array.isArray(obj.summaryList)) {

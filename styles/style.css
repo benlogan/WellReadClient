@@ -1,7 +1,7 @@
 body {
-    font-family: "Lucida Grande";
+    /*font-family: "Lucida Grande"; just allow helvetica from bootstrap */
     /*font-size: 50px;*/
-    width: 350px; /* was 960 before mobile testing */
+    width: 350px; /* was 960 before mobile testing, 350 after. need a basic media query here*/
     margin: 0 auto;
     padding: 5px;
     /*
@@ -9,6 +9,11 @@ body {
     margin-left: 5px;
     margin-right: 5px;
     */
+}
+
+@media only screen and 
+    (min-width: 768px) {
+        body {width: 800px;}
 }
 
 .centeredText {
@@ -22,6 +27,16 @@ body {
 #searchBox {
     width: 250px;
     margin: 0 auto;
+    font-family: inherit; /* we don't want to let jquery ui change this */
+}
+
+#loginOrName {
+    position: absolute;
+    right: 0px;
+    /*float: right; could be useful for keeping it within the body?*/
+    font-size: small;
+    font-style: italic;
+    color: mediumblue;
 }
 
 #bookBox {
@@ -44,23 +59,20 @@ body {
 #SummaryTextArea {
     font-size: 16px;
     width: 98%;
+    height: 200px;
     /* text areas come with an extra 6px! 2 padding and 1 border on either side, so 100% will breach your design */
 }
 
 input, textarea, select, h1, h2{font-family:inherit;}
-
-/*
-#authBox {
-    width: 250px;
-    margin: 0 auto;
-}
-*/
 
 #voteCount {
     text-align: center;
     margin: auto;
 }
 
+.vote {
+    text-align: center;
+}
 .vote-up-off {
     height: 30px;
     width: 40px;
@@ -124,11 +136,26 @@ a {
 }
 
 /* Modal box or Popup box */
-.popupContainer{
-	position:absolute;
+.popupContainer {
+    height: auto;
+    /*position:absolute;
 	width:330px;
-	height: auto;
 	left:45%;
 	top:80px;
-	background: #FFF;
+	background: #FFF;*/
+}
+
+/*
+ having problems with autocomplete input width
+ http://stackoverflow.com/questions/5643767/jquery-ui-autocomplete-width-not-set-correctly
+ a lot of this is ignored, more work needed to figure out what is actually having the desired affect, possibly the margin!?
+ */
+.ui-menu {
+    width: 200px;
+    margin-bottom: 2em;
+    list-style: none;
+    padding: 2px;
+    margin: 0;
+    display: block;
+    outline: none;
 }
