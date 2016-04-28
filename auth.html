@@ -8,6 +8,7 @@
         <script type="text/javascript" src="scripts/jquery/jquery-2.1.4.js"></script>
         <script type="text/javascript" src="scripts/jquery.leanModal.min.js"></script>
         <script type="text/javascript" src="scripts/oauth.js"></script>
+        <script type="text/javascript" src="scripts/auth.js"></script>
         <script type="text/javascript">
             OAuth.initialize('DONT COMMIT');
 
@@ -17,57 +18,6 @@
 
             function authEmail() {
                 // surely form post instead, to auth service!?
-            }
-
-            function authTwitter() {
-                //Using popup
-                OAuth.popup('twitter').done(function(result) {
-                    //use result.access_token in your API request 
-                    //or use result.get|post|put|del|patch|me methods (see below)
-                    result.get('/1.1/account/verify_credentials.json?include_email=true').done(function(data) {
-                        processUserData(data);
-                    })
-                })
-                .fail(function (err) {
-                    console.error("ERROR : " + err);
-                });
-            }
-
-            function authFacebook() {
-                OAuth.popup('facebook').done(function(result) {
-                    result.me().done(function(data) {
-                        processUserData(data);
-                    })
-                })
-            }
-
-            function authGoogle() {
-                OAuth.popup('google').done(function(result) {
-                    result.me().done(function(data) {
-                        processUserData(data);
-                    })
-                })
-            }
-
-            function authUser(uniqueUserID, name, email) {
-                // check if this user is already in the db
-                if(!userExists(email)) {
-                    newUser(email, name);
-                }
-            }
-
-            function userExists(email) {
-                // do we have a record in the DB? true/false
-                // TODO GET request for user details
-                return false;
-            }
-
-            function newUser(email, name) {
-                // doesnt exist in our database, create
-                // store the auth source too, google or twitter?
-                console.log("Creating new user! Name: " + name + " Email: " + email);
-                // TODO POST request for setting up new user
-                // just use their email address and store their name too, nothing else for now. don't think we need the oauth id
             }
 
             function processUserData(data) {

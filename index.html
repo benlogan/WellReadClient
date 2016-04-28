@@ -16,13 +16,78 @@
         <script type="text/javascript" src="scripts/jquery/jquery-2.1.4.js"></script>
         <script type="text/javascript" src="scripts/jquery/jquery-ui.js"></script>
         <script type="text/javascript" src="scripts/main.js"></script>
+        
         <!-- Auth Scripts -->
         <script type="text/javascript" src="scripts/jquery.leanModal.min.js"></script>
         <script type="text/javascript" src="scripts/oauth.js"></script>
+        <script type="text/javascript" src="scripts/auth.js"></script>
+        
+        <script type="text/javascript" src="scripts/jquery.blockUI.js"></script>
+        
         <script type="text/javascript">
+            OAuth.initialize('DONT COMMIT');
+            
+            // already authorized?
+            var oAuthToken = localStorage.getItem('oAuthToken');
+            var oAuthTokenSecret = localStorage.getItem('oAuthTokenSecret');
+            if(oAuthToken && oAuthTokenSecret) {
+                // what's the life of that token?
+                //console.log('found cached oAuthToken : ' + oAuthToken);
+                //console.log('found cached oAuthTokenSecret : ' + oAuthTokenSecret);
+                
+                // validate token and then processUserData!
+                // e.g. https://dev.twitter.com/rest/reference/get/account/verify_credentials
+                // so also need to know what service is what - need to validate with twitter/google/facebook etc
+                // or useful google link
+                // https://developers.google.com/identity/protocols/OAuth2UserAgent#validatetoken
+                
+                validateUser(oAuthToken);
+            }
+            
             $(document).ready(function() {
                 $("#loginOrName").leanModal();//({ top : "50%" }); actually hacking this into the leanModal script, because it's not designed to take %'s on input!
+                
+                //if(window.location.href.indexOf("ISBN=") > -1) {
+                var startingISBN = getParameterByName("ISBN");
+                if(startingISBN) {
+                    getBookDetails(startingISBN);
+                } else {
+                    //getTopBooks(5);
+                }
             });
+            
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+            
+            function setGetParameter(paramName, paramValue) {
+                var url = window.location.href;
+                var hash = location.hash;
+                url = url.replace(hash, '');
+                if (url.indexOf(paramName + "=") >= 0)
+                {
+                    var prefix = url.substring(0, url.indexOf(paramName));
+                    var suffix = url.substring(url.indexOf(paramName));
+                    suffix = suffix.substring(suffix.indexOf("=") + 1);
+                    suffix = (suffix.indexOf("&") >= 0) ? suffix.substring(suffix.indexOf("&")) : "";
+                    url = prefix + paramName + "=" + paramValue + suffix;
+                }
+                else
+                {
+                if (url.indexOf("?") < 0)
+                    url += "?" + paramName + "=" + paramValue;
+                else
+                    url += "&" + paramName + "=" + paramValue;
+                }
+                //window.location.href = url + hash; //this will nav!
+                window.history.pushState("blah", "blah Title", url + hash); //FIXME what are these other params!?!
+            }       
             
             function editText() {
                 // experimenting with a larger area when editing, but not really urgent
@@ -35,6 +100,17 @@
                     $("#SummaryTextArea").width('200');
                 }
                 */
+            }
+            
+            // UI functionality only
+            function processUserData(name) {
+                $('#lean_overlay').hide();
+                $('#modalTrigger').hide();
+                $('#authBox').hide();
+
+                $('#loginOrName').text(name);
+                //$('#loginOrName').off();
+                $('#loginOrName').addClass("disabled");
             }
         </script>
     </head>
@@ -56,12 +132,14 @@
         
         <!-- Using jQuery UI, but we could consider bootstrap etc -->
         <div id='searchBox' class="ui-widget">
-            <h1 class="centeredText">WellRead</h1>
+            <h1 class="centeredText"><a href="./">WellRead</a></h1>
             <!--<label for="search">Search: </label>-->
 
             <h5 class="centeredText">Search for a book...</h5>
             <input id="search"> <!-- class="ui-autocomplete-input" -->
         </div>
+        
+        <div id="topBooks"></div>
         
         <div id="bookBox" hidden="true">
             <!-- Book Summary -->
