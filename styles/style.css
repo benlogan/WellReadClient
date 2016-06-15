@@ -47,7 +47,8 @@ body {
 #bookMetadata {
     /*display:inline-block;
     padding-left:10px;*/
-    margin-left: 50%; /* was 150px, but really just want it to be half of the parent */
+    margin-left: 30%; /* was 150px, but really just want it to be half of the parent */
+    padding-bottom: 50px;
 }
 
 #summaryInput {
@@ -63,6 +64,28 @@ body {
     /* text areas come with an extra 6px! 2 padding and 1 border on either side, so 100% will breach your design */
 }
 
+#summaryTable {
+    width: 100%;
+    table-layout: fixed;
+}
+#summaryTable tr > td {
+    padding-bottom: 10px;
+    white-space: pre-wrap; /* critical for respecting new lines in the summaries */
+    font-size: large;
+}
+
+.summaryAuthor {
+    text-align: right;
+    font-style: italic;
+    width: 20%;
+    vertical-align: bottom;
+}
+
+/*.summaryAuthorRow {
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+}*/
+
 input, textarea, select, h1, h2{font-family:inherit;}
 
 #voteCount {
@@ -70,6 +93,13 @@ input, textarea, select, h1, h2{font-family:inherit;}
     margin: auto;
 }
 
+.votecell {
+    width: 10%;
+    padding-top: 15px;
+}
+.postcell {
+    width: 90%;
+}
 .vote {
     text-align: center;
 }
