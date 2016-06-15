@@ -24,8 +24,8 @@ function autoCompleteFromServer(request, response) {
     //http://127.0.0.1:1337/?q=freak
     
     $.ajax({
-        //url: 'http://127.0.0.1:1337',
-        url: 'http://wellreadserver.herokuapp.com',
+        url: 'http://127.0.0.1:1337/bookSearch/',
+        //url: 'http://wellreadserver.herokuapp.com',
         type: 'GET',
         data: 'q=' + searchTerm,
         success: function(data) {
@@ -33,19 +33,13 @@ function autoCompleteFromServer(request, response) {
             
             var formattedData = [];
             
-            var obj = JSON.parse(data);
-            for(var id in obj) {
-                var book = obj[id];
-                
-                // simple array of strings
-                //formattedData.push(book.title);
-                
-                // array of objects
-                var newBookObject = new Object();
-                newBookObject.label = book.title;
-                //newBookObject.value = book.isbn;
-                newBookObject.isbn = book.isbn;
-                formattedData.push(newBookObject);
+            if(Array.isArray(data)) {
+                for(var i = 0; i < data.length; i++) {
+                    var newBookObject = new Object();
+                    newBookObject.label = data[i].title;
+                    newBookObject.isbn = data[i].isbn;
+                    formattedData.push(newBookObject);
+                }
             }
             
             response(formattedData);
