@@ -111,9 +111,13 @@
                 $('#loginOrName').text(name);
                 //$('#loginOrName').off();
                 $('#loginOrName').addClass("disabled");
+                
+                // hide the login overlay on comments, now that we are authenticated
+                $('#SummaryText').unblock(); // a reminder, this is using http://malsup.com/jquery/block/
             }
         </script>
     </head>
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <body>
         
         <a id="loginOrName" href="#authBox" class="btn">Login</a>
