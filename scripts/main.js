@@ -1,7 +1,7 @@
 $(function() {
     $( "#search" ).autocomplete({
         minLength: 3,
-        delay: 800,
+        delay: 500,
       //source: availableTags
         source: autoCompleteFromServer,
         select: function (event, ui) {
@@ -24,8 +24,8 @@ function autoCompleteFromServer(request, response) {
     //http://127.0.0.1:1337/?q=freak
     
     $.ajax({
-        url: 'http://127.0.0.1:1337/bookSearch/',
-        //url: 'http://wellreadserver.herokuapp.com',
+        //url: 'http://127.0.0.1:1337/bookSearch/',
+        url: 'http://wellreadserver.herokuapp.com/bookSearch/',
         type: 'GET',
         data: 'q=' + searchTerm,
         success: function(data) {
@@ -47,10 +47,11 @@ function autoCompleteFromServer(request, response) {
     });
 }
 
-function getBookDetails(isbn) { 
+function getBookDetails(isbn) {
+    $('#topBooks').hide();
     $.ajax({
-        url: 'http://127.0.0.1:1337/bookLookup/',
-        //url: 'http://wellreadserver.herokuapp.com',
+        //url: 'http://127.0.0.1:1337/bookLookup/',
+        url: 'http://wellreadserver.herokuapp.com/bookLookup/',
         type: 'GET',
         data: 'ISBN=' + isbn,
         success: function(data) {
@@ -119,18 +120,18 @@ function getBookDetails(isbn) {
 
 function getTopBooks(number) { 
     $.ajax({
-        url: 'http://127.0.0.1:1337/topSummaries/',
-        //url: 'http://wellreadserver.herokuapp.com',
+        //url: 'http://127.0.0.1:1337/topSummaries/',
+        url: 'http://wellreadserver.herokuapp.com/topSummaries/',
         type: 'GET',
         data: 'number=' + number,
         success: function(data) {
             console.log("Top Books Response : " + data);
             var listHtml = "<ul>";
             $.each(data, function(key, val) {
-                listHtml += "<li>" + val.title + " : " + val.author + " : summaries = " + val.summary_count + "</li>";
+                listHtml += "<li><a href=?ISBN=" + val.isbn + ">" + val.title + "</a>, " + val.author + "</li>";
             });
             listHtml += "</ul>";
-            $('#topBooks').html(listHtml);
+            $('#topBooks').append(listHtml);
         }
     });
 }
@@ -175,8 +176,8 @@ $(document).on("click", '#summaryTable', function(e) {
         sortTable('summaryTable');
         
         $.ajax({
-            url: 'http://127.0.0.1:1337/voteSummary/',
-            //url: 'http://wellreadserver.herokuapp.com',
+            //url: 'http://127.0.0.1:1337/voteSummary/',
+            url: 'http://wellreadserver.herokuapp.com/voteSummary/',
             type: 'POST',
             data: 'oAuthID=' + oAuthID_memory + '&summaryID=' + summaryID + '&vote=' + vote,
             success: function(data) {
@@ -239,6 +240,7 @@ function refreshPage() {
 // new way of writing/posting summaries
 $(document).on('submit', '#SummaryText', function(e) {
     var summary = $('#SummaryTextArea').val(); // use jquery to fetch value
+    summary = encodeURIComponent(summary);
     
     if(!summary) {
         alert('Please enter some text...');
@@ -246,10 +248,10 @@ $(document).on('submit', '#SummaryText', function(e) {
         return;
     }
     
-    console.log("About to POST summary : " + summary + " for user : " + oAuthID_memory);
+    console.log("About to POST summary : " + summary + " for user : " + oAuthID_memory + " where ISBN : " + $('#bookISBN').text());
     $.ajax({
-        url: 'http://127.0.0.1:1337/writeSummary/',
-        //url: 'http://wellreadserver.herokuapp.com',
+        //url: 'http://127.0.0.1:1337/writeSummary/',
+        url: 'http://wellreadserver.herokuapp.com/writeSummary/',
         type: 'POST',
         data: 'oAuthID=' + oAuthID_memory + '&summary=' + summary + '&isbn=' + $('#bookISBN').text(),
         success: function(data) {

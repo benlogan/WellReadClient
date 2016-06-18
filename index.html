@@ -25,7 +25,7 @@
         <script type="text/javascript" src="scripts/jquery.blockUI.js"></script>
         
         <script type="text/javascript">
-            OAuth.initialize('DONT COMMIT');
+            OAuth.initialize('wAA51lFaSkRlFSLZrHIZH8iz7k4');
             
             // already authorized?
             var oAuthToken = localStorage.getItem('oAuthToken');
@@ -50,9 +50,11 @@
                 //if(window.location.href.indexOf("ISBN=") > -1) {
                 var startingISBN = getParameterByName("ISBN");
                 if(startingISBN) {
+                    $('#topBooks').hide();
                     getBookDetails(startingISBN);
                 } else {
-                    //getTopBooks(5);
+                    $('#topBooks').show();
+                    getTopBooks(5);
                 }
             });
             
@@ -143,7 +145,9 @@
             <input id="search"> <!-- class="ui-autocomplete-input" -->
         </div>
         
-        <div id="topBooks"></div>
+        <div id="topBooks">
+            <h3 class="centeredText">Most Read</h3>
+        </div>
         
         <div id="bookBox" hidden="true">
             <!-- Book Summary -->

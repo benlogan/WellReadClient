@@ -25,7 +25,7 @@ body {
 }
 
 #searchBox {
-    width: 250px;
+    width: 50%;
     margin: 0 auto;
     font-family: inherit; /* we don't want to let jquery ui change this */
 }
@@ -39,6 +39,15 @@ body {
     color: mediumblue;
 }
 
+#topBooks {
+    width: 50%;
+    margin: 0 auto;
+    border-style: solid;
+    border-width: thin;
+    border-color: #07c;
+    margin-top: 50px;
+}
+
 #bookBox {
     /*width: 50%;*/
     margin: 0 auto;
@@ -48,7 +57,7 @@ body {
     /*display:inline-block;
     padding-left:10px;*/
     margin-left: 30%; /* was 150px, but really just want it to be half of the parent */
-    padding-bottom: 50px;
+    /*padding-bottom: 50px;*/
 }
 
 #summaryInput {
@@ -69,9 +78,13 @@ body {
     table-layout: fixed;
 }
 #summaryTable tr > td {
-    padding-bottom: 10px;
+    padding-top: 50px;
+    padding-bottom: 50px;
     white-space: pre-wrap; /* critical for respecting new lines in the summaries */
     font-size: large;
+    border-bottom: black;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
 }
 
 .summaryAuthor {
@@ -188,4 +201,23 @@ a {
     margin: 0;
     display: block;
     outline: none;
+    font-size: 15px;
+    font-style: normal;
+}
+.ui-menu .ui-menu-item:hover {
+    display: block;
+    text-decoration: none;
+    font-weight: normal;
+    color: #3D3D3D;
+    cursor: pointer;
+    background-color: lightblue;
+    background-image: none;
+    border: 1px solid lightgray;
+}
+.ui-widget-content .ui-state-hover, .ui-widget-content .ui-state-focus {
+    border: 1px solid lightgray;
+    background-image: none;
+    background-color: lightblue;
+    font-weight: normal;
+    color: #3D3D3D;
 }
