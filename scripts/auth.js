@@ -81,6 +81,8 @@ function authUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecre
             newUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret);
         }
     });
+    
+    loggedIn = true;
 }
 
 function newUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret) {
