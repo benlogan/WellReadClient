@@ -29,7 +29,7 @@ function autoCompleteFromServer(request, response) {
         type: 'GET',
         data: 'q=' + searchTerm,
         success: function(data) {
-            console.log("Search Response : " + data);
+            //console.log("Search Response : " + data);
             
             var formattedData = [];
             
@@ -55,7 +55,7 @@ function getBookDetails(isbn) {
         type: 'GET',
         data: 'ISBN=' + isbn,
         success: function(data) {
-            console.log("Search Response (ISBN) : " + data);
+            //console.log("Search Response (ISBN) : " + data);
             
             // FIXME really need to properly clear all fields
 
@@ -86,6 +86,7 @@ function getBookDetails(isbn) {
             $('#bookPublisher').html(obj.book.publisher);
             $('#bookISBN').html(obj.book.isbn);
             $('#bookImage').attr('src', obj.book.image);
+            $('#bookImageLink').attr('href', obj.book.urlAmazon);
             
             // jquery show hidden div!
             $('#bookBox').show();
@@ -125,7 +126,7 @@ function getTopBooks(number) {
         type: 'GET',
         data: 'number=' + number,
         success: function(data) {
-            console.log("Top Books Response : " + data);
+            //console.log("Top Books Response : " + data);
             var listHtml = "<ul>";
             $.each(data, function(key, val) {
                 listHtml += "<li><a href=?ISBN=" + val.isbn + ">" + val.title + "</a>, " + val.author + "</li>";
