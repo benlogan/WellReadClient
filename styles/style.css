@@ -221,3 +221,13 @@ a {
     font-weight: normal;
     color: #3D3D3D;
 }
+footer {
+    /*position: absolute;
+    left: 0;
+    bottom: 0;*/
+    height: 50px;
+    width: 100%;
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
