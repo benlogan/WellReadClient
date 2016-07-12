@@ -43,8 +43,7 @@ function authGoogle() {
 
 function validateUser(oAuthToken) {
     $.ajax({
-        //url: 'http://127.0.0.1:1337/userLookup/',
-        url: 'http://wellreadserver.herokuapp.com/userLookup/',
+        url: hostname + 'userLookup/',
         type: 'GET',
         data: 'oAuthToken=' + oAuthToken,
         success: function(data) {
@@ -68,8 +67,7 @@ function authUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecre
     
     // do we have a record in the DB? true/false
     $.ajax({
-        //url: 'http://127.0.0.1:1337/userLookup/',
-        url: 'http://wellreadserver.herokuapp.com/userLookup/',
+        url: hostname + 'userLookup/',
         type: 'GET',
         data: 'oAuthToken=' + oAuthToken,
         success: function(data) {
@@ -89,8 +87,7 @@ function newUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret
     // doesnt exist in our database, create
     console.log("Creating new user! Name: " + name + " Email: " + email);
     $.ajax({
-        //url: 'http://127.0.0.1:1337/writeUser/',
-        url: 'http://wellreadserver.herokuapp.com/writeUser/',
+        url: hostname + 'writeUser/',
         type: 'POST',
         data: 'oAuthID=' + oAuthID + "&oAuthMethod=" + oAuthMethod + "&name=" + name + "&email=" + email + "&oAuthToken=" + oAuthToken + "&oAuthTokenSecret=" + oAuthTokenSecret,
         success: function(data) {

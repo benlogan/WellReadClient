@@ -1,3 +1,6 @@
+var hostname = 'http://wellreadserver.herokuapp.com/';
+//var hostname = 'http://127.0.0.1:1337/';
+
 $(function() {
     $( "#search" ).autocomplete({
         minLength: 3,
@@ -6,9 +9,9 @@ $(function() {
         source: autoCompleteFromServer,
         select: function (event, ui) {
             //alert($(this).val());
-            var isbn = ui.item.isbn;
+            var asin = ui.item.asin;
             // navigate to book page passing the ISBN!
-            getBookDetails(isbn);
+            getBookDetails(asin);
         }
     });
 });
@@ -24,8 +27,7 @@ function autoCompleteFromServer(request, response) {
     //http://127.0.0.1:1337/?q=freak
     
     $.ajax({
-        //url: 'http://127.0.0.1:1337/bookSearch/',
-        url: 'http://wellreadserver.herokuapp.com/bookSearch/',
+        url: hostname + 'bookSearch/',
         type: 'GET',
         data: 'q=' + searchTerm,
         success: function(data) {
@@ -38,6 +40,7 @@ function autoCompleteFromServer(request, response) {
                     var newBookObject = new Object();
                     newBookObject.label = data[i].title;
                     newBookObject.isbn = data[i].isbn;
+                    newBookObject.asin = data[i].asin;
                     formattedData.push(newBookObject);
                 }
             }
@@ -47,13 +50,12 @@ function autoCompleteFromServer(request, response) {
     });
 }
 
-function getBookDetails(isbn) {
+function getBookDetails(asin) {
     $('#topBooks').hide();
     $.ajax({
-        //url: 'http://127.0.0.1:1337/bookLookup/',
-        url: 'http://wellreadserver.herokuapp.com/bookLookup/',
+        url: hostname + 'bookLookup/',
         type: 'GET',
-        data: 'ISBN=' + isbn,
+        data: 'ASIN=' + asin,
         success: function(data) {
             //console.log("Search Response (ISBN) : " + data);
             
@@ -84,7 +86,8 @@ function getBookDetails(isbn) {
             $('#bookAuthor').html(authorList);
             
             $('#bookPublisher').html(obj.book.publisher);
-            $('#bookISBN').html(obj.book.isbn);
+            $('#bookISBN').html(obj.book.isbn + ' (ISBN)');
+            $('#bookASIN').html(obj.book.asin);
             $('#bookImage').attr('src', obj.book.image);
             $('#bookImageLink').attr('href', obj.book.urlAmazon);
             
@@ -114,22 +117,21 @@ function getBookDetails(isbn) {
             $('#search').val(''); //jquery clear input
             $('#SummaryTextArea').val('');
             
-            setGetParameter("ISBN", obj.book.isbn);
+            setGetParameter("ASIN", asin);
         }
     });
 }
 
 function getTopBooks(number) { 
     $.ajax({
-        //url: 'http://127.0.0.1:1337/topSummaries/',
-        url: 'http://wellreadserver.herokuapp.com/topSummaries/',
+        url: hostname + 'topSummaries/',
         type: 'GET',
         data: 'number=' + number,
         success: function(data) {
             //console.log("Top Books Response : " + data);
             var listHtml = "<ul>";
             $.each(data, function(key, val) {
-                listHtml += "<li><a href=?ISBN=" + val.isbn + ">" + val.title + "</a>, " + val.author + "</li>";
+                listHtml += "<li><a href=?ASIN=" + val.asin + ">" + val.title + "</a>, " + val.author + "</li>";
             });
             listHtml += "</ul>";
             $('#topBooks').append(listHtml);
@@ -179,8 +181,7 @@ $(document).on("click", '#summaryTable', function(e) {
         sortTable('summaryTable');
         
         $.ajax({
-            //url: 'http://127.0.0.1:1337/voteSummary/',
-            url: 'http://wellreadserver.herokuapp.com/voteSummary/',
+            url: hostname + 'voteSummary/',
             type: 'POST',
             data: 'oAuthID=' + oAuthID_memory + '&summaryID=' + summaryID + '&vote=' + vote,
             success: function(data) {
@@ -237,7 +238,7 @@ function writeSummaryInput() {
 // FIXME lots of work needed here, really shouldn't be necessary to go to server
 // and even if we do, we don't need the whole page, just the summaries? break that service up!
 function refreshPage() {
-    getBookDetails($('#bookISBN').text());
+    getBookDetails($('#bookASIN').text());
 }
 
 // new way of writing/posting summaries
@@ -251,12 +252,11 @@ $(document).on('submit', '#SummaryText', function(e) {
         return;
     }
     
-    console.log("About to POST summary : " + summary + " for user : " + oAuthID_memory + " where ISBN : " + $('#bookISBN').text());
+    console.log("About to POST summary : " + summary + " for user : " + oAuthID_memory + " where ASIN : " + $('#bookASIN').text());
     $.ajax({
-        //url: 'http://127.0.0.1:1337/writeSummary/',
-        url: 'http://wellreadserver.herokuapp.com/writeSummary/',
+        url: hostname + 'writeSummary/',
         type: 'POST',
-        data: 'oAuthID=' + oAuthID_memory + '&summary=' + summary + '&isbn=' + $('#bookISBN').text(),
+        data: 'oAuthID=' + oAuthID_memory + '&summary=' + summary + '&isbn=' + $('#bookASIN').text(),
         success: function(data) {
             // we don't end up in here, no response!
             //var obj = JSON.parse(data);

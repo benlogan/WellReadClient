@@ -58,7 +58,7 @@
                 $("#loginOrName").leanModal();//({ top : "50%" }); actually hacking this into the leanModal script, because it's not designed to take %'s on input!
                 
                 //if(window.location.href.indexOf("ISBN=") > -1) {
-                var startingISBN = getParameterByName("ISBN");
+                var startingISBN = getParameterByName("ASIN");
                 if(startingISBN) {
                     $('#topBooks').hide();
                     getBookDetails(startingISBN);
@@ -169,6 +169,7 @@
                 <h3 id='bookAuthor'></h3>
                 <h5 id='bookPublisher'></h5>
                 <h5 id='bookISBN'></h5>
+                <h5 id='bookASIN'></h5>
             </div>
             
             <!-- Table of Summaries -->
