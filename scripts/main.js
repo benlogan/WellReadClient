@@ -90,6 +90,7 @@ function getBookDetails(asin) {
             $('#bookASIN').html(obj.book.asin);
             $('#bookImage').attr('src', obj.book.image);
             $('#bookImageLink').attr('href', obj.book.urlAmazon);
+            $('#bookPurchaseLink').attr('href', 'https://www.waterstones.com/book/' + obj.book.isbn);
             
             // jquery show hidden div!
             $('#bookBox').show();

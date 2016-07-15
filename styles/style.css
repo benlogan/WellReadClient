@@ -54,10 +54,18 @@ body {
 }
 
 #bookMetadata {
-    /*display:inline-block;
-    padding-left:10px;*/
-    margin-left: 30%; /* was 150px, but really just want it to be half of the parent */
-    /*padding-bottom: 50px;*/
+    /*overflow:auto; *//* needed to auto grow the div to match the size of the floated image within it */
+    display: flex;
+    padding-top: 15px;
+}
+#bookMetadataRight {
+    /*margin-left: 35%;*/ /* was 150px, but really just want it to be half of the parent */
+    padding-left: 50px;
+    position: relative; /* just so that I can bottom align the price button */
+}
+#purchaseBook {
+    position: absolute;
+    bottom: 0;
 }
 
 #summaryInput {
@@ -164,7 +172,7 @@ a {
 
 .bookCoverImage {
     float: left;
-    width: 100px;
+    width: 234px;
 }
 
 #lean_overlay {
