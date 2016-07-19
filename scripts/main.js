@@ -274,3 +274,8 @@ $(document).on('submit', '#SummaryText', function(e) {
     
     $('#SummaryTextArea').val('');
 });
+
+function hidePromoText() {
+    // just remember that we've hidden it, so that it's not displayed again
+    localStorage.setItem('promoHidden', 'true');
+}

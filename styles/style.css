@@ -20,6 +20,15 @@ body {
     text-align: center;
 }
 
+#promoText {
+    text-align: justify;
+}
+
+#closeButton {
+    background: none;
+    border: none;
+}
+
 #search {
     width: 100%;
 }
