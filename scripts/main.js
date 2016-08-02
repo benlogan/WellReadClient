@@ -146,7 +146,7 @@ function createSummaryTableRow(summaryID, summaryTime, summaryText, summaryAutho
     if(summaryTime) {
         summaryTime = new Date(summaryTime).toLocaleString('en-GB', { hour12: false });
     }
-    return "<tr><td class='votecell'><div class='vote'><input type='hidden' name='_id_' value=" + summaryID + "><a id='voteUp' class='vote-up-off'></a><span itemprop='upvoteCount' class='vote-count-post '>" + votes + "</span><a id='voteDown' class='vote-down-off'></a></div></td><td class='postcell'>" + summaryText + tweetSynopsis + "</td><td class='summaryAuthor'>" + summaryAuthor + " " + summaryTime + "</td></tr>";
+    return "<tr><td class='votecell'><div class='vote'><input type='hidden' name='_id_' value=" + summaryID + "><a id='voteUp' class='vote-up-off' title='Vote Up!'></a><span itemprop='upvoteCount' class='vote-count-post' title='Vote Count'>" + votes + "</span><a id='voteDown' class='vote-down-off' title='Vote Down!'></a></div></td><td class='postcell'>" + summaryText + tweetSynopsis + "</td><td class='summaryAuthor'>" + summaryAuthor + " " + summaryTime + "</td></tr>";
     //<tr class='summaryAuthorRow'><td></td><td class='summaryAuthor'>" + summaryAuthor + " (" + summaryTime + ")</td></tr>"; // used to be a seperate row, but this complicates sorting!
     // <a class='star-off'></a> disabled for now, no need for it - might eventually become 'my favourites'
 }
