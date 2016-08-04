@@ -77,6 +77,7 @@
                 } else {
                     $('#topBooks').show();
                     getTopBooks(10);
+                    getBestSellers();
                 }
             });
             
@@ -170,7 +171,12 @@
         </div>
         
         <div id="topBooks">
-            <h3 class="centeredText">Most Read</h3>
+            <div id="mostRead">
+                <h3 class="centeredText">Most Read</h3>
+            </div>
+            <div id="bestSellers">
+                <h3 class="centeredText">Best Sellers</h3>
+            </div>
         </div>
         
         <div id="bookBox" hidden="true">

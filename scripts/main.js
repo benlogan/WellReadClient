@@ -123,21 +123,54 @@ function getBookDetails(asin) {
     });
 }
 
-function getTopBooks(number) { 
-    $.ajax({
-        url: hostname + 'topSummaries/',
-        type: 'GET',
-        data: 'number=' + number,
-        success: function(data) {
-            //console.log("Top Books Response : " + data);
-            var listHtml = "<ul>";
-            $.each(data, function(key, val) {
-                listHtml += "<li><a href=?ASIN=" + val.asin + ">" + val.title + "</a>, " + val.author + "</li>";
-            });
-            listHtml += "</ul>";
-            $('#topBooks').append(listHtml);
-        }
-    });
+function getTopBooks(number) {
+    var listHtml = sessionStorage.getItem('topBookList');
+    
+    if(listHtml) {
+        $('#mostRead').append(listHtml);
+    } else {
+        // if they aren't in the session cache, fetch fresh
+        $.ajax({
+            url: hostname + 'topSummaries/',
+            type: 'GET',
+            data: 'number=' + number,
+            success: function(data) {
+                //console.log("Top Books Response : " + data);
+                var listHtml = "<ol>";
+                $.each(data, function(key, val) {
+                    listHtml += "<li><a href=?ASIN=" + val.asin + ">" + val.title + "</a>, " + val.author + "</li>";
+                });
+                listHtml += "</ol>";
+                $('#mostRead').append(listHtml);
+
+                sessionStorage.setItem('topBookList', listHtml);
+            }
+        }); 
+    }
+}
+
+function getBestSellers() {
+    var listHtml = sessionStorage.getItem('bestSellersList');
+    
+    if(listHtml) {
+        $('#bestSellers').append(listHtml);
+    } else {
+        // if they aren't in the session cache, fetch fresh
+        $.ajax({
+            url: hostname + 'topBooks/',
+            type: 'GET',
+            success: function(data) {
+                var listHtml = "<ol>";
+                $.each(data, function(key, val) {
+                    listHtml += "<li><a href=?ASIN=" + val.asin + ">" + val.title + "</a></li>";
+                });
+                listHtml += "</ol>";
+                $('#bestSellers').append(listHtml);
+
+                sessionStorage.setItem('bestSellersList', listHtml);
+            }
+        }); 
+    }
 }
 
 // actually two rows! one for the author name
