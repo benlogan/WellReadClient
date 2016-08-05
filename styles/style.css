@@ -18,10 +18,12 @@ body {
 
 .centeredText {
     text-align: center;
+    clear: both;
 }
 
 #promoText {
     text-align: justify;
+    clear: both;
 }
 
 #closeButton {
@@ -98,23 +100,31 @@ body {
     padding-top: 50px;
     padding-bottom: 50px;
     white-space: pre-wrap; /* critical for respecting new lines in the summaries */
-    font-size: large;
+    font-size: x-large;
+    font-weight: 200;
+    text-align: justify;
     border-bottom: black;
     border-bottom-style: solid;
     border-bottom-width: thin;
 }
 
-.summaryAuthor {
+#summaryAuthor {
     text-align: right;
-    font-style: italic;
-    width: 20%;
-    vertical-align: bottom;
+    font-weight: lighter;
+    padding-top: 20px;
 }
 
-/*.summaryAuthorRow {
-    border-bottom-style: solid;
-    border-bottom-width: thin;
-}*/
+#headerBox {
+    width: 60%;
+    margin: 0 auto;
+}
+#siteIcon {
+    float: left;
+    width: 50px;
+}
+#siteHeader {
+    float; right;
+}
 
 input, textarea, select, h1, h2{font-family:inherit;}
 

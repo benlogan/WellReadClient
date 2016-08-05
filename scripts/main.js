@@ -12,6 +12,9 @@ $(function() {
             var asin = ui.item.asin;
             // navigate to book page passing the ISBN!
             getBookDetails(asin);
+            
+            // we'd like to track what people are searching for
+            ga('send', 'event', 'Input', 'BookSearch', ui.item.asin + ':' + ui.item.label);
         }
     });
 });
@@ -179,12 +182,15 @@ function createSummaryTableRow(summaryID, summaryTime, summaryText, summaryAutho
     if(summaryTime) {
         summaryTime = new Date(summaryTime).toLocaleString('en-GB', { hour12: false });
     }
-    return "<tr><td class='votecell'><div class='vote'><input type='hidden' name='_id_' value=" + summaryID + "><a id='voteUp' class='vote-up-off' title='Vote Up!'></a><span itemprop='upvoteCount' class='vote-count-post' title='Vote Count'>" + votes + "</span><a id='voteDown' class='vote-down-off' title='Vote Down!'></a></div></td><td class='postcell'>" + summaryText + tweetSynopsis + "</td><td class='summaryAuthor'>" + summaryAuthor + " " + summaryTime + "</td></tr>";
+    
+    var authorStamp = '<p id="summaryAuthor">by ' + summaryAuthor + ". " + summaryTime + '</p>';
+    
+    return "<tr><td class='votecell'><div class='vote'><input type='hidden' name='_id_' value=" + summaryID + "><a id='voteUp' class='vote-up-off' title='Vote Up!'></a><span itemprop='upvoteCount' class='vote-count-post' title='Vote Count'>" + votes + "</span><a id='voteDown' class='vote-down-off' title='Vote Down!'></a></div></td><td class='postcell'>" + summaryText + authorStamp + tweetSynopsis + "</td></tr>";
     //<tr class='summaryAuthorRow'><td></td><td class='summaryAuthor'>" + summaryAuthor + " (" + summaryTime + ")</td></tr>"; // used to be a seperate row, but this complicates sorting!
     // <a class='star-off'></a> disabled for now, no need for it - might eventually become 'my favourites'
 }
 
-var tweetSynopsis = '<br/><br/><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="Check out WellRead and this excellent book synopsis!" data-via="VeryWellRead" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>';
+var tweetSynopsis = '<p id="tweetSynopsis"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="Check out WellRead and this excellent book synopsis!" data-via="VeryWellRead" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>';
 
 // won't be applied for future items added to the page dynamically!
 //$("#voteUp").click(function() {

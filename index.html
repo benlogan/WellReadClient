@@ -161,7 +161,13 @@
         
         <!-- Using jQuery UI, but we could consider bootstrap etc -->
         <div id='searchBox' class="ui-widget">
-            <h1 class="centeredText"><a href="./">WellRead</a></h1>
+            <div id='headerBox'>
+                <a href="./">
+                <img id="siteIcon" src="images/favicon.png">
+                <h1 id="siteHeader">WellRead</h1>
+                </a>
+            </div>
+            
             <!--<label for="search">Search: </label>-->
             <!--<button id="closeButton" data-toggle="collapse" data-target="#promoText"><img src="images/toggle-collapse-alt_blue.png"/></button>-->
             <div id="promoText" class="collapse in">Welcome to Well Read! We provide a community generated and curated selection of excellent, high quality, book summaries. If you are looking for an independently generated, accurate and complete book synopsis, we can help. You can vote for your favourite, or least-favourite, synopsis. Of course, you can also contribute yourself! We want to help you quickly and easily discover the key points for a particular book, without necessarily having to read the whole thing. If the book is of real interest and you want to know more, then we'd recommend you read the whole thing and you can purchase it directly from Well Read. <a href="#promoText" data-toggle="collapse" onclick="hidePromoText()">Hide text!</a></div>
