@@ -16,10 +16,12 @@
         
         <link rel="stylesheet" href="styles/jquery-ui.css" type="text/css"/>
         <link rel="stylesheet" href="styles/style.css" type="text/css"/>
+        <link rel="stylesheet" href="styles/dropdown.css" type="text/css"/>
         
         <script type="text/javascript" src="scripts/jquery/jquery-2.1.4.js"></script>
         <script type="text/javascript" src="scripts/jquery/jquery-ui.js"></script>
         <script type="text/javascript" src="scripts/main.js"></script>
+        <script type="text/javascript" src="scripts/dropdown.js"></script>
         
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         
@@ -63,10 +65,9 @@
             $(document).ready(function() {
                 $("#loginOrName").leanModal();//({ top : "50%" }); actually hacking this into the leanModal script, because it's not designed to take %'s on input!
                 
-                var promoHidden = localStorage.getItem('promoHidden');
-                if(promoHidden == 'true') {
-                    $('#promoText').hide();
-                    //$('#promoText').removeClass('in');
+                // this has to be hidden by default, or you get flicker trying to hide it.
+                if(!localStorage.getItem('promoHidden') || localStorage.getItem('promoHidden') == 'false') {
+                    $('#promoText').addClass('in');
                 }
                 
                 //if(window.location.href.indexOf("ISBN=") > -1) {
@@ -78,6 +79,7 @@
                     $('#topBooks').show();
                     getTopBooks(10);
                     getBestSellers();
+                    getFeaturedBooks("management", "Management ↓");
                 }
             });
             
@@ -170,13 +172,24 @@
             
             <!--<label for="search">Search: </label>-->
             <!--<button id="closeButton" data-toggle="collapse" data-target="#promoText"><img src="images/toggle-collapse-alt_blue.png"/></button>-->
-            <div id="promoText" class="collapse in">Welcome to Well Read! We provide a community generated and curated selection of excellent, high quality, book summaries. If you are looking for an independently generated, accurate and complete book synopsis, we can help. You can vote for your favourite, or least-favourite, synopsis. Of course, you can also contribute yourself! We want to help you quickly and easily discover the key points for a particular book, without necessarily having to read the whole thing. If the book is of real interest and you want to know more, then we'd recommend you read the whole thing and you can purchase it directly from Well Read. <a href="#promoText" data-toggle="collapse" onclick="hidePromoText()">Hide text!</a></div>
+            <div id="promoText" class="collapse">Welcome to Well Read! We provide a community generated and curated selection of excellent, high quality, book summaries. If you are looking for an independently generated, accurate and complete book synopsis, we can help. You can vote for your favourite, or least-favourite, synopsis. Of course, you can also contribute yourself! We want to help you quickly and easily discover the key points for a particular book, without necessarily having to read the whole thing. If the book is of real interest and you want to know more, then we'd recommend you read the whole thing and you can purchase it directly from Well Read. <a href="#promoText" data-toggle="collapse" onclick="hidePromoText()">Hide text!</a></div>
             
             <h5 class="centeredText">Search for a book...</h5>
             <input id="search" onclick="ga('send', 'event', 'Input', 'Search', 'User clicked in the main search box.')"> <!-- class="ui-autocomplete-input" -->
         </div>
         
         <div id="topBooks">
+            <div id="featured">
+                <div class="dropdown">
+                    <h3><button id="dropDownButton" onclick="myDropDown()" class="dropbtn">Featured - Management</button></h3>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a onclick="getFeaturedBooks('management','Management ↓')">Management</a>
+                        <a onclick="getFeaturedBooks('programming','Programming ↓')">Programming</a>
+                        <a onclick="getFeaturedBooks('classics','Classics ↓')">Classics</a>
+                    </div>
+                </div>
+                <div id="featuredList"></div>
+            </div>
             <div id="mostRead">
                 <h3 class="centeredText">Most Read</h3>
             </div>
@@ -200,7 +213,6 @@
                     <h5 id='bookISBN'></h5>
                     <h5 id='bookASIN'></h5>
                     <div id='purchaseBook'>
-                        <p>Buy it now...</p>
                         <a id='bookPurchaseLink' target="_blank">
                             <img id='bookPurchaseImage' src="images/234_60_stones.gif">
                         </a>

@@ -100,9 +100,10 @@ function getBookDetails(asin) {
             if(!loggedIn) {
                 //$("#SummaryText :input").prop("disabled", true);
                 $('#SummaryText').block({ 
-                    message: '<h4>You need to Login</h4>', 
+                    message: '<a id="loginOrNameBox" href="#authBox" class="btn" onclick="ga(\'send\', \'event\', \'Buttons\', \'Login\', \'User clicked oauth login button.\')">Please Login</a>', 
                     css: { border: '1px solid #000' }
                 });
+                $("#loginOrNameBox").leanModal(); // important - must attach the lean modal
             }
             
             $('#summaryTable').html('');
@@ -165,7 +166,7 @@ function getBestSellers() {
             success: function(data) {
                 var listHtml = "<ol>";
                 $.each(data, function(key, val) {
-                    listHtml += "<li><a href=?ASIN=" + val.asin + ">" + val.title + "</a></li>";
+                    listHtml += "<li><a href=?ASIN=" + val.asin + ">" + val.title + "</a>, " + val.author + "</li>";
                 });
                 listHtml += "</ol>";
                 $('#bestSellers').append(listHtml);
@@ -174,6 +175,33 @@ function getBestSellers() {
             }
         }); 
     }
+}
+
+function getFeaturedBooks(category, friendlyCategory) {
+    //var listHtml = sessionStorage.getItem('featuredBookList');
+    
+    //if(listHtml) {
+    //    $('#featured').append(listHtml);
+    //} else {
+        // if they aren't in the session cache, fetch fresh
+        $.ajax({
+            url: hostname + 'booksFeatured/',
+            type: 'GET',
+            data: 'category=' + category,
+            success: function(data) {
+                $('#dropDownButton').text("Featured - " + friendlyCategory);
+                
+                var listHtml = "<ol>";
+                $.each(data, function(key, val) {
+                    listHtml += "<li><a href=?ASIN=" + val.asin + ">" + val.title + "</a>, " + val.author + "</li>";
+                });
+                listHtml += "</ol>";
+                $('#featuredList').html(listHtml);
+
+                //sessionStorage.setItem('featuredBookList', listHtml);
+            }
+        }); 
+    //}
 }
 
 // actually two rows! one for the author name

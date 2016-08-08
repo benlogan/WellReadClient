@@ -69,6 +69,11 @@ body {
     display: flex;
     padding-top: 15px;
 }
+#bookMetadataLeft {
+    /* needs a hardcoded max size, because some small images will result in right-hand text being truncated. 
+       this sort of works, but not all of the time - needs more testing FIXME */
+    /*min-height: 350px;*/
+}
 #bookMetadataRight {
     /*margin-left: 35%;*/ /* was 150px, but really just want it to be half of the parent */
     padding-left: 50px;
