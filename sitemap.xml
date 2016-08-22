@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url>
+  <loc>http://www.wellread.eu/</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.wellread.eu/index.html</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.wellread.eu/?ASIN=014118776X</loc>
+</url>
+<url>
+  <loc>http://www.wellread.eu/?ASIN=014143998X</loc>
+</url>
+<url>
+  <loc>http://www.wellread.eu/?ASIN=0091816971</loc>
+</url>
+<url>
+  <loc>http://www.wellread.eu/?ASIN=0349113467</loc>
+</url>
+<url>
+  <loc>http://www.wellread.eu/?ASIN=B002RI9ZY0</loc>
+</url>
+<url>
+  <loc>http://www.wellread.eu/?ASIN=0140449094</loc>
+</url>
+</urlset>
