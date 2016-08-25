@@ -20,7 +20,10 @@ body {
     text-align: center;
     clear: both;
 }
-
+.socialIcon {
+    width: 100px;
+    height: 100px;
+}
 #promoText {
     text-align: justify;
     clear: both;
