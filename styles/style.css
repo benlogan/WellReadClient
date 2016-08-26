@@ -29,6 +29,15 @@ body {
     clear: both;
 }
 
+#LoadingImage {
+    display: block;
+    margin: 0 auto;
+}
+
+#myDropdown {
+    cursor: pointer;
+}
+
 #closeButton {
     background: none;
     border: none;
