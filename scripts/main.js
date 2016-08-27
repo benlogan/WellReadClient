@@ -97,6 +97,7 @@ function getBookDetails(asin) {
             
             // jquery show hidden div!
             $('#bookBox').show();
+            $('#LoadingImageDiv').show();
             if(!loggedIn) {
                 //$("#SummaryText :input").prop("disabled", true);
                 $('#SummaryText').block({ 
@@ -116,7 +117,11 @@ function getBookDetails(asin) {
                     //$('#summaryTable').append(html);
                     summaryRowsHtml += createSummaryTableRow(val.id, val.datetime, val.text, val.name, val.votes);
                 });
+                $('#LoadingImageDiv').hide();
                 $('#summaryTable').html(summaryRowsHtml);
+            } else {
+                // no summaries, dynamic scraping...
+                getScrapedSynopsis(obj.book.urlAmazon, obj.book.asin, obj.book.isbn);
             }
             
             $('#search').val(''); //jquery clear input
@@ -345,4 +350,22 @@ $(document).on('submit', '#SummaryText', function(e) {
 function hidePromoText() {
     // just remember that we've hidden it, so that it's not displayed again
     localStorage.setItem('promoHidden', 'true');
+}
+
+function getScrapedSynopsis(URL, asin, isbn) {
+    $.ajax({
+        url: 'https://wellreadscraper.herokuapp.com/',
+        type: 'GET',
+        data: 'url=' + URL + '&asin=' + asin + '&isbn=' + isbn,
+        success: function(data) {
+            //console.log("Scraper Response : " + data.SynopsisAmazon);
+            
+            var summaryRowsHtml = createSummaryTableRow(data.SynopsisIdAmazon, new Date(), data.SynopsisAmazon, 'Amazon', 0);
+            //if(data.SynopsisAmazon != data.SynopsisWaterstones) { // not the right place for this logic - it has already been written to the DB anyway!
+            summaryRowsHtml += createSummaryTableRow(data.SynopsisIdWaterstones, new Date(), data.SynopsisWaterstones, 'Waterstones', 0);
+
+            $('#LoadingImage').hide();
+            $('#summaryTable').html(summaryRowsHtml);
+        }
+    }); 
 }

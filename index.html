@@ -74,6 +74,7 @@
                 var startingISBN = getParameterByName("ASIN");
                 if(startingISBN) {
                     $('#topBooks').hide();
+                    $('#LoadingImageDiv').show();
                     getBookDetails(startingISBN);
                 } else {
                     $('#topBooks').show();
@@ -225,6 +226,10 @@
                 </div>
             </div>
             
+            <div id="LoadingImageDiv">
+                <img id="LoadingImage" src="images/ring.svg">
+            </div>
+            
             <!-- Table of Summaries -->
             <div id='summaryTableDiv'>
                 <table id='summaryTable'>
@@ -262,6 +267,6 @@
     <footer>
         <a href="https://www.facebook.com/verywellread" target="_blank"><img class="socialIcon" src="images/icon_facebook.png"></a>
         <a href="https://twitter.com/VeryWellRead" target="_blank"><img class="socialIcon" src="images/icon_twitter.png"></a>
-        <a href="https://plus.google.com/103413358692473818550" target="_blank"><img class="socialIcon" src="images/icon_google.png"></a>
+        <a href="https://plus.google.com/+WellreadEu" target="_blank"><img class="socialIcon" src="images/icon_google.png"></a>
     </footer>
 </html>
