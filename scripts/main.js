@@ -22,7 +22,7 @@ $(function() {
 //https://api.jqueryui.com/autocomplete/#option-source
 function autoCompleteFromServer(request, response) {
     var searchTerm = request.term;
-    console.log("Search Term : " + searchTerm);
+    //console.log("Search Term : " + searchTerm);
 
     //response([{ label: 'BOB', value: '123'  }]);
     
