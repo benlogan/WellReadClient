@@ -11,7 +11,7 @@ body {
     */
 }
 
-@media only screen and 
+@media only screen and
     (min-width: 768px) {
         body {width: 800px;}
 }
@@ -23,6 +23,9 @@ body {
 .socialIcon {
     width: 100px;
     height: 100px;
+}
+.updatedDate {
+    text-align: center;
 }
 #promoText {
     text-align: justify;
@@ -82,7 +85,7 @@ body {
     padding-top: 15px;
 }
 #bookMetadataLeft {
-    /* needs a hardcoded max size, because some small images will result in right-hand text being truncated. 
+    /* needs a hardcoded max size, because some small images will result in right-hand text being truncated.
        this sort of works, but not all of the time - needs more testing FIXME */
     /*min-height: 350px;*/
 }

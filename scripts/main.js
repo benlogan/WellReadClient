@@ -12,7 +12,7 @@ $(function() {
             var asin = ui.item.asin;
             // navigate to book page passing the ISBN!
             getBookDetails(asin);
-            
+
             // we'd like to track what people are searching for
             ga('send', 'event', 'Input', 'BookSearch', ui.item.asin + ':' + ui.item.label);
         }
@@ -25,19 +25,19 @@ function autoCompleteFromServer(request, response) {
     //console.log("Search Term : " + searchTerm);
 
     //response([{ label: 'BOB', value: '123'  }]);
-    
+
     // send to the server and get a list of book titles back
     //http://127.0.0.1:1337/?q=freak
-    
+
     $.ajax({
         url: hostname + 'bookSearch/',
         type: 'GET',
         data: 'q=' + searchTerm,
         success: function(data) {
             //console.log("Search Response : " + data);
-            
+
             var formattedData = [];
-            
+
             if(Array.isArray(data)) {
                 for(var i = 0; i < data.length; i++) {
                     var newBookObject = new Object();
@@ -47,7 +47,7 @@ function autoCompleteFromServer(request, response) {
                     formattedData.push(newBookObject);
                 }
             }
-            
+
             response(formattedData);
         }
     });
@@ -61,17 +61,17 @@ function getBookDetails(asin) {
         data: 'ASIN=' + asin,
         success: function(data) {
             //console.log("Search Response (ISBN) : " + data);
-            
+
             // FIXME really need to properly clear all fields
 
             //var obj = JSON.parse(data);
             // FIXME think the change to the response headers has made this redundant?
-            // well not redundant, but it actually breaks! doesn't parse, cos it's already JSON? 
-            var obj = data; 
-            
+            // well not redundant, but it actually breaks! doesn't parse, cos it's already JSON?
+            var obj = data;
+
             // pass it straight to the page?
             $('#bookTitle').html(obj.book.title);
-            
+
             var authorList = '';
             if(Array.isArray(obj.book.author)) {
                 $.each(obj.book.author, function(key, val) {
@@ -87,26 +87,26 @@ function getBookDetails(asin) {
                 authorList = obj.book.author;
             }
             $('#bookAuthor').html(authorList);
-            
+
             $('#bookPublisher').html(obj.book.publisher);
             $('#bookISBN').html(obj.book.isbn + ' (ISBN)');
             $('#bookASIN').html(obj.book.asin);
             $('#bookImage').attr('src', obj.book.image);
             $('#bookImageLink').attr('href', obj.book.urlAmazon);
             $('#bookPurchaseLink').attr('href', 'https://www.waterstones.com/book/' + obj.book.isbn);
-            
+
             // jquery show hidden div!
             $('#bookBox').show();
             $('#LoadingImageDiv').show();
             if(!loggedIn) {
                 //$("#SummaryText :input").prop("disabled", true);
-                $('#SummaryText').block({ 
-                    message: '<a id="loginOrNameBox" href="#authBox" class="btn" onclick="ga(\'send\', \'event\', \'Buttons\', \'Login\', \'User clicked oauth login button.\')">Please Login</a>', 
+                $('#SummaryText').block({
+                    message: '<a id="loginOrNameBox" href="#authBox" class="btn" onclick="ga(\'send\', \'event\', \'Buttons\', \'Login\', \'User clicked oauth login button.\')">Please Login</a>',
                     css: { border: '1px solid #000' }
                 });
                 $("#loginOrNameBox").leanModal(); // important - must attach the lean modal
             }
-            
+
             $('#summaryTable').html('');
             if(Array.isArray(obj.summaryList)) {
                 var summaryRowsHtml = '';
@@ -123,10 +123,10 @@ function getBookDetails(asin) {
                 // no summaries, dynamic scraping...
                 getScrapedSynopsis(obj.book.urlAmazon, obj.book.asin, obj.book.isbn);
             }
-            
+
             $('#search').val(''); //jquery clear input
             $('#SummaryTextArea').val('');
-            
+
             setGetParameter("ASIN", asin);
         }
     });
@@ -134,7 +134,7 @@ function getBookDetails(asin) {
 
 function getTopBooks(number) {
     var listHtml = sessionStorage.getItem('topBookList');
-    
+
     if(listHtml) {
         $('#mostRead').append(listHtml);
     } else {
@@ -154,13 +154,13 @@ function getTopBooks(number) {
 
                 sessionStorage.setItem('topBookList', listHtml);
             }
-        }); 
+        });
     }
 }
 
 function getBestSellers() {
     var listHtml = sessionStorage.getItem('bestSellersList');
-    
+
     if(listHtml) {
         $('#bestSellers').append(listHtml);
     } else {
@@ -178,13 +178,13 @@ function getBestSellers() {
 
                 sessionStorage.setItem('bestSellersList', listHtml);
             }
-        }); 
+        });
     }
 }
 
 function getFeaturedBooks(category, friendlyCategory) {
     //var listHtml = sessionStorage.getItem('featuredBookList');
-    
+
     //if(listHtml) {
     //    $('#featured').append(listHtml);
     //} else {
@@ -195,7 +195,7 @@ function getFeaturedBooks(category, friendlyCategory) {
             data: 'category=' + category,
             success: function(data) {
                 $('#dropDownButton').text("Featured - " + friendlyCategory);
-                
+
                 var listHtml = "<ol>";
                 $.each(data, function(key, val) {
                     listHtml += "<li><a href=?ASIN=" + val.asin + ">" + val.title + "</a>, " + val.author + "</li>";
@@ -205,7 +205,7 @@ function getFeaturedBooks(category, friendlyCategory) {
 
                 //sessionStorage.setItem('featuredBookList', listHtml);
             }
-        }); 
+        });
     //}
 }
 
@@ -215,9 +215,9 @@ function createSummaryTableRow(summaryID, summaryTime, summaryText, summaryAutho
     if(summaryTime) {
         summaryTime = new Date(summaryTime).toLocaleString('en-GB', { hour12: false });
     }
-    
+
     var authorStamp = '<p id="summaryAuthor">by ' + summaryAuthor + ". " + summaryTime + '</p>';
-    
+
     return "<tr><td class='votecell'><div class='vote'><input type='hidden' name='_id_' value=" + summaryID + "><a id='voteUp' class='vote-up-off' title='Vote Up!'></a><span itemprop='upvoteCount' class='vote-count-post' title='Vote Count'>" + votes + "</span><a id='voteDown' class='vote-down-off' title='Vote Down!'></a></div></td><td class='postcell'>" + summaryText + authorStamp + tweetSynopsis + "</td></tr>";
     //<tr class='summaryAuthorRow'><td></td><td class='summaryAuthor'>" + summaryAuthor + " (" + summaryTime + ")</td></tr>"; // used to be a seperate row, but this complicates sorting!
     // <a class='star-off'></a> disabled for now, no need for it - might eventually become 'my favourites'
@@ -244,7 +244,7 @@ $(document).on("click", '#summaryTable', function(e) {
     }
     if((vote == 1 || vote == -1) && !sessionStorage.getItem(summaryID)) {
         sessionStorage.setItem(summaryID, vote);
-        
+
         // don't wait for server and page refresh - update the numbers on client
         var voteCount = e.target.parentNode.getElementsByClassName('vote-count-post').item(0);
         //var voteCount = e.target.parentNode.getElementById('voteCount');
@@ -252,7 +252,7 @@ $(document).on("click", '#summaryTable', function(e) {
         voteCount.textContent = newVoteCount;
         // this works well, but doesn't currently handle reordering the list!
         sortTable('summaryTable');
-        
+
         $.ajax({
             url: hostname + 'voteSummary/',
             type: 'POST',
@@ -276,10 +276,10 @@ function sortTable(tableElementId) {
     var store = [];
     for(var i=0, len=tbl.rows.length; i<len; i++) {
         var row = tbl.rows[i];
-        
+
         var sortnr = parseFloat(row.cells[0].getElementsByClassName('vote-count-post').item(0).textContent);
         //var sortnr = parseFloat(row.cells[0].textContent || row.cells[0].innerText);
-        
+
         if(!isNaN(sortnr)) store.push([sortnr, row]);
     }
     store.sort(function(x,y) {
@@ -318,13 +318,13 @@ function refreshPage() {
 $(document).on('submit', '#SummaryText', function(e) {
     var summary = $('#SummaryTextArea').val(); // use jquery to fetch value
     summary = encodeURIComponent(summary);
-    
+
     if(!summary) {
         alert('Please enter some text...');
         e.preventDefault(); // don't navigate away!
         return;
     }
-    
+
     console.log("About to POST summary : " + summary + " for user : " + oAuthID_memory + " where ASIN : " + $('#bookASIN').text());
     $.ajax({
         url: hostname + 'writeSummary/',
@@ -340,10 +340,10 @@ $(document).on('submit', '#SummaryText', function(e) {
         }
     });
     e.preventDefault(); // don't navigate away!
-    
+
     // update page/summaries
     //$('#summaryTable').append(createSummaryTableRow(null, summary)); // problematical if we dont have the ID of the row!
-    
+
     $('#SummaryTextArea').val('');
 });
 
@@ -359,7 +359,7 @@ function getScrapedSynopsis(URL, asin, isbn) {
         data: 'url=' + URL + '&asin=' + asin + '&isbn=' + isbn,
         success: function(data) {
             //console.log("Scraper Response : " + data.SynopsisAmazon);
-            
+
             var summaryRowsHtml = createSummaryTableRow(data.SynopsisIdAmazon, new Date(), data.SynopsisAmazon, 'Amazon', 0);
             //if(data.SynopsisAmazon != data.SynopsisWaterstones) { // not the right place for this logic - it has already been written to the DB anyway!
             summaryRowsHtml += createSummaryTableRow(data.SynopsisIdWaterstones, new Date(), data.SynopsisWaterstones, 'Waterstones', 0);
@@ -367,5 +367,5 @@ function getScrapedSynopsis(URL, asin, isbn) {
             $('#LoadingImage').hide();
             $('#summaryTable').html(summaryRowsHtml);
         }
-    }); 
+    });
 }

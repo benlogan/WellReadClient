@@ -5,33 +5,33 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="WellRead is a community website featuring many excellent, high quality, book summaries. If you are looking for an independently generated, accurate and complete book synopsis, we can help. You can vote for your favourite, or least-favourite, synopsis. Of course, you can also contribute yourself! We want to help you quickly and easily discover the key points for a particular book, without having to read the whole book. If the book is of real interest and you want to know more, we'd recommend you read the whole thing and you can purchase it directly from WellRead.">
-        
+
         <!-- to verify site ownership for Bing! -->
         <meta name="msvalidate.01" content="272469FFC492F5AB70B78F30EC1B6F86" />
-        
+
         <!-- Auth Styles -->
         <link rel="stylesheet" href="styles/bootstrap.css" type="text/css"/>
         <link rel="stylesheet" href="styles/bootstrap-social.css" type="text/css"/>
         <link rel="stylesheet" href="styles/font-awesome.css" type="text/css"/>
-        
+
         <link rel="stylesheet" href="styles/jquery-ui.css" type="text/css"/>
         <link rel="stylesheet" href="styles/style.css" type="text/css"/>
         <link rel="stylesheet" href="styles/dropdown.css" type="text/css"/>
-        
+
         <script type="text/javascript" src="scripts/jquery/jquery-2.1.4.js"></script>
         <script type="text/javascript" src="scripts/jquery/jquery-ui.js"></script>
         <script type="text/javascript" src="scripts/main.js"></script>
         <script type="text/javascript" src="scripts/dropdown.js"></script>
-        
+
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        
+
         <!-- Auth Scripts -->
         <script type="text/javascript" src="scripts/jquery.leanModal.min.js"></script>
         <script type="text/javascript" src="scripts/oauth.js"></script>
         <script type="text/javascript" src="scripts/auth.js"></script>
-        
+
         <script type="text/javascript" src="scripts/jquery.blockUI.js"></script>
-        
+
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -41,10 +41,10 @@
             ga('create', 'UA-79583608-1', 'auto');
             ga('send', 'pageview');
         </script>
-        
+
         <script type="text/javascript">
             OAuth.initialize('wAA51lFaSkRlFSLZrHIZH8iz7k4');
-            
+
             // already authorized?
             var oAuthToken = localStorage.getItem('oAuthToken');
             var oAuthTokenSecret = localStorage.getItem('oAuthTokenSecret');
@@ -52,24 +52,27 @@
                 // what's the life of that token?
                 //console.log('found cached oAuthToken : ' + oAuthToken);
                 //console.log('found cached oAuthTokenSecret : ' + oAuthTokenSecret);
-                
+
                 // validate token and then processUserData!
                 // e.g. https://dev.twitter.com/rest/reference/get/account/verify_credentials
                 // so also need to know what service is what - need to validate with twitter/google/facebook etc
                 // or useful google link
                 // https://developers.google.com/identity/protocols/OAuth2UserAgent#validatetoken
-                
+
                 validateUser(oAuthToken);
             }
-            
+
             $(document).ready(function() {
+                //document.getElementById("updatedDate").innerHTML = "Updated " + new Date().toDateString();
+                $(".updatedDate").html("Updated " + new Date().toDateString());
+
                 $("#loginOrName").leanModal();//({ top : "50%" }); actually hacking this into the leanModal script, because it's not designed to take %'s on input!
-                
+
                 // this has to be hidden by default, or you get flicker trying to hide it.
                 if(!localStorage.getItem('promoHidden') || localStorage.getItem('promoHidden') == 'false') {
                     $('#promoText').addClass('in');
                 }
-                
+
                 //if(window.location.href.indexOf("ISBN=") > -1) {
                 var startingISBN = getParameterByName("ASIN");
                 if(startingISBN) {
@@ -83,7 +86,7 @@
                     getFeaturedBooks("management", "Management ↓");
                 }
             });
-            
+
             function getParameterByName(name, url) {
                 if (!url) url = window.location.href;
                 name = name.replace(/[\[\]]/g, "\\$&");
@@ -93,7 +96,7 @@
                 if (!results[2]) return '';
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
-            
+
             function setGetParameter(paramName, paramValue) {
                 var url = window.location.href;
                 var hash = location.hash;
@@ -115,8 +118,8 @@
                 }
                 //window.location.href = url + hash; //this will nav!
                 window.history.pushState("blah", "blah Title", url + hash); //FIXME what are these other params!?!
-            }       
-            
+            }
+
             function editText() {
                 // experimenting with a larger area when editing, but not really urgent
                 /*
@@ -129,7 +132,7 @@
                 }
                 */
             }
-            
+
             // UI functionality only
             function processUserData(name) {
                 $('#lean_overlay').hide();
@@ -139,7 +142,7 @@
                 $('#loginOrName').text(name);
                 //$('#loginOrName').off();
                 $('#loginOrName').addClass("disabled");
-                
+
                 // hide the login overlay on comments, now that we are authenticated
                 $('#SummaryText').unblock(); // a reminder, this is using http://malsup.com/jquery/block/
             }
@@ -147,9 +150,9 @@
     </head>
     <link rel="icon" type="image/png" href="images/favicon.png">
     <body>
-        
+
         <a id="loginOrName" href="#authBox" class="btn" onclick="ga('send', 'event', 'Buttons', 'Login', 'User clicked oauth login button.')">Login</a>
-        
+
         <div id="authBox" class="popupContainer" style="display: none">
             <a class="btn btn-block btn-social btn-twitter" onclick="authTwitter()">
                 <span class="fa fa-twitter"></span> Sign in with Twitter
@@ -161,7 +164,7 @@
                 <span class="fa fa-google"></span> Sign in with Google
             </a>
         </div>
-        
+
         <!-- Using jQuery UI, but we could consider bootstrap etc -->
         <div id='searchBox' class="ui-widget">
             <div id='headerBox'>
@@ -170,15 +173,15 @@
                 <h1 id="siteHeader">WellRead</h1>
                 </a>
             </div>
-            
+
             <!--<label for="search">Search: </label>-->
             <!--<button id="closeButton" data-toggle="collapse" data-target="#promoText"><img src="images/toggle-collapse-alt_blue.png"/></button>-->
             <div id="promoText" class="collapse">Welcome to Well Read! We provide a community generated and curated selection of excellent, high quality, book summaries. If you are looking for an independently generated, accurate and complete book synopsis, we can help. You can vote for your favourite, or least-favourite, synopsis. Of course, you can also contribute yourself! We want to help you quickly and easily discover the key points for a particular book, without necessarily having to read the whole thing. If the book is of real interest and you want to know more, then we'd recommend you read the whole thing and you can purchase it directly from Well Read. <a href="#promoText" data-toggle="collapse" onclick="hidePromoText()">Hide text!</a></div>
-            
+
             <h5 class="centeredText">Search for a book...</h5>
             <input id="search" onclick="ga('send', 'event', 'Input', 'Search', 'User clicked in the main search box.')"> <!-- class="ui-autocomplete-input" -->
         </div>
-        
+
         <div id="topBooks">
             <div id="featured">
                 <div class="dropdown">
@@ -193,12 +196,14 @@
             </div>
             <div id="mostRead">
                 <h3 class="centeredText">Most Read</h3>
+                <h6 class="updatedDate"/>
             </div>
             <div id="bestSellers">
                 <h3 class="centeredText">Best Sellers</h3>
+                <h6 class="updatedDate"/>
             </div>
         </div>
-        
+
         <div id="bookBox" hidden="true">
             <!-- Book Summary -->
             <div id='bookMetadata'>
@@ -225,11 +230,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div id="LoadingImageDiv">
                 <img id="LoadingImage" src="images/ring.svg">
             </div>
-            
+
             <!-- Table of Summaries -->
             <div id='summaryTableDiv'>
                 <table id='summaryTable'>
@@ -241,7 +246,7 @@
                                     <a class="vote-up-off"></a>
                                     <span itemprop="upvoteCount" class="vote-count-post ">0</span>
                                     <a class="vote-down-off"></a>
-                                    <a class="star-off"></a>    
+                                    <a class="star-off"></a>
                                 </div>
                             </td>
                             <td class="postcell">
@@ -252,7 +257,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <!-- User Input -->
             <div id='summaryInput'>
                 <h5>Add your own summary...</h5>
