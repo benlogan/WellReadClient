@@ -71,6 +71,7 @@ function getBookDetails(asin) {
 
             // pass it straight to the page?
             $('#bookTitle').html(obj.book.title);
+            document.title = obj.book.title;
 
             var authorList = '';
             if(Array.isArray(obj.book.author)) {
@@ -119,6 +120,8 @@ function getBookDetails(asin) {
                 });
                 $('#LoadingImageDiv').hide();
                 $('#summaryTable').html(summaryRowsHtml);
+
+                $('meta[name=description]').attr('content', 'WellRead Top Synopsis : ' + obj.summaryList[0].text.substring(0,500) + '...');
             } else {
                 // no summaries, dynamic scraping...
                 getScrapedSynopsis(obj.book.urlAmazon, obj.book.asin, obj.book.isbn);
