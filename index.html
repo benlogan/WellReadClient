@@ -81,6 +81,7 @@
                     getBookDetails(startingISBN);
                 } else {
                     $('#topBooks').show();
+                    getMostRecent(10);
                     getTopBooks(10);
                     getBestSellers();
                     getFeaturedBooks("management", "Management ↓");
@@ -193,6 +194,10 @@
                     </div>
                 </div>
                 <div id="featuredList"></div>
+            </div>
+            <div id="mostRecent">
+                <h3 class="centeredText">Most Recent</h3>
+                <h6 class="updatedDate"/>
             </div>
             <div id="mostRead">
                 <h3 class="centeredText">Most Read</h3>

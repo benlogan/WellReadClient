@@ -161,6 +161,30 @@ function getTopBooks(number) {
     }
 }
 
+function getMostRecent(number) {
+    var listHtml = sessionStorage.getItem('mostRecentList');
+
+    if(listHtml) {
+        $('#mostRecent').append(listHtml);
+    } else {
+        $.ajax({
+            url: hostname + 'mostRecent/',
+            type: 'GET',
+            data: 'number=' + number,
+            success: function(data) {
+                var listHtml = "<ol>";
+                $.each(data, function(key, val) {
+                    listHtml += "<li><a href=?ASIN=" + val.asin + ">" + val.title + "</a>, " + val.author + "</li>";
+                });
+                listHtml += "</ol>";
+                $('#mostRecent').append(listHtml);
+
+                sessionStorage.setItem('mostRecentList', listHtml);
+            }
+        });
+    }
+}
+
 function getBestSellers() {
     var listHtml = sessionStorage.getItem('bestSellersList');
 

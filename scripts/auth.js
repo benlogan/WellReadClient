@@ -7,11 +7,12 @@ function authTwitter() {
         var oAuthToken = result.oauth_token;
         var oAuthTokenSecret = result.oauth_token_secret;
         //use result.access_token in your API request
-        
+
         //or use result.get|post|put|del|patch|me methods (see below)
         result.get('/1.1/account/verify_credentials.json?include_email=true').done(function(data) {
             processUserData(data.name);
-            authUser(data.id, "T", data.name, data.email, oAuthToken, oAuthTokenSecret);
+            // FIXME email is blank, why!? working on it, support query with twitter & oauth.io
+            authUser(data.id, "T", data.name, data.email, oAuthToken, oAuthTokenSecret, data.screen_name);
         })
     })
     .fail(function (err) {
@@ -58,13 +59,13 @@ function validateUser(oAuthToken) {
     });
 }
 
-function authUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret) {
+function authUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret, screenName) {
     oAuthID_memory = oAuthID;
     //console.log('oAuthToken : ' + oAuthToken);
     //console.log('oAuthTokenSecret : ' + oAuthTokenSecret);
     localStorage.setItem('oAuthToken', oAuthToken);
     localStorage.setItem('oAuthTokenSecret', oAuthTokenSecret);
-    
+
     // do we have a record in the DB? true/false
     $.ajax({
         url: hostname + 'userLookup/',
@@ -73,23 +74,24 @@ function authUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecre
         success: function(data) {
             console.log("User Lookup Response. Name : " + data.name);
             // do nothing
+            newUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret, screenName);
         },
         error: function(data) {
             console.log("User Lookup - nothing found!");
-            newUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret);
+            newUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret, screenName);
         }
     });
-    
+
     loggedIn = true;
 }
 
-function newUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret) {
+function newUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret, screenName) {
     // doesnt exist in our database, create
     console.log("Creating new user! Name: " + name + " Email: " + email);
     $.ajax({
         url: hostname + 'writeUser/',
         type: 'POST',
-        data: 'oAuthID=' + oAuthID + "&oAuthMethod=" + oAuthMethod + "&name=" + name + "&email=" + email + "&oAuthToken=" + oAuthToken + "&oAuthTokenSecret=" + oAuthTokenSecret,
+        data: 'oAuthID=' + oAuthID + "&oAuthMethod=" + oAuthMethod + "&name=" + name + "&email=" + email + "&oAuthToken=" + oAuthToken + "&oAuthTokenSecret=" + oAuthTokenSecret + "&screenName=" + screenName,
         success: function(data) {
             console.log("Write User Response : " + data);
         }
