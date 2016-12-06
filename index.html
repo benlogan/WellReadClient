@@ -46,10 +46,9 @@
             OAuth.initialize('wAA51lFaSkRlFSLZrHIZH8iz7k4');
 
             // already authorized?
-            var oAuthToken = localStorage.getItem('oAuthToken');
-            var oAuthTokenSecret = localStorage.getItem('oAuthTokenSecret');
-            if(oAuthToken && oAuthTokenSecret) {
-                // what's the life of that token?
+            var oAuthID = localStorage.getItem('oAuthID');
+            if(oAuthID) {
+                // what's the life of that token? doesn't matter for now, ditch the token - if they have authenticated once, that's enough
                 //console.log('found cached oAuthToken : ' + oAuthToken);
                 //console.log('found cached oAuthTokenSecret : ' + oAuthTokenSecret);
 
@@ -59,7 +58,8 @@
                 // or useful google link
                 // https://developers.google.com/identity/protocols/OAuth2UserAgent#validatetoken
 
-                validateUser(oAuthToken);
+                validateUser(oAuthID);
+                // FIXME what if validation fails!?
             }
 
             $(document).ready(function() {

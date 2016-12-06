@@ -1,5 +1,4 @@
 var loggedIn = false;
-var oAuthID_memory;
 
 function authTwitter() {
     //Using popup
@@ -42,15 +41,15 @@ function authGoogle() {
     })
 }
 
-function validateUser(oAuthToken) {
+// on page load, if we have an ID in session storage, confirm that user is in the DB and return the name
+function validateUser(oAuthID) {
     $.ajax({
         url: hostname + 'userLookup/',
         type: 'GET',
-        data: 'oAuthToken=' + oAuthToken,
+        data: 'oAuthID=' + oAuthID,
         success: function(data) {
             console.log("Validate User Response. Name : " + data.name);
             loggedIn = true;
-            oAuthID_memory = data.oAuthID;
             processUserData(data.name);
         },
         error: function(data) {
@@ -59,22 +58,20 @@ function validateUser(oAuthToken) {
     });
 }
 
+// on authentication attempt, check if the user already exists (i.e. session storage has been cleared), otherwise create them
 function authUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret, screenName) {
-    oAuthID_memory = oAuthID;
     //console.log('oAuthToken : ' + oAuthToken);
     //console.log('oAuthTokenSecret : ' + oAuthTokenSecret);
-    localStorage.setItem('oAuthToken', oAuthToken);
-    localStorage.setItem('oAuthTokenSecret', oAuthTokenSecret);
+    localStorage.setItem('oAuthID', oAuthID);
 
     // do we have a record in the DB? true/false
     $.ajax({
         url: hostname + 'userLookup/',
         type: 'GET',
-        data: 'oAuthToken=' + oAuthToken,
+        data: 'oAuthID=' + oAuthID,
         success: function(data) {
             console.log("User Lookup Response. Name : " + data.name);
             // do nothing
-            newUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret, screenName);
         },
         error: function(data) {
             console.log("User Lookup - nothing found!");
