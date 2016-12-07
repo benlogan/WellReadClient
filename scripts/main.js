@@ -69,7 +69,7 @@ function getBookDetails(asin) {
             // well not redundant, but it actually breaks! doesn't parse, cos it's already JSON?
             var obj = data;
 
-            // pass it straight to the page?
+            // pass it straight to the page...
             $('#bookTitle').html(obj.book.title);
             document.title = obj.book.title;
 
@@ -245,12 +245,14 @@ function createSummaryTableRow(summaryID, summaryTime, summaryText, summaryAutho
 
     var authorStamp = '<p id="summaryAuthor">by ' + summaryAuthor + ". " + summaryTime + '</p>';
 
+    // must build this here, in scope, or the doc title won't have been updated! FIXME actually don't need to do this multiple times!
+    var shortBookTitle = document.title.substring(0,27) + "...";// truncated for use in a tweet
+    var tweetSynopsis = '<p id="tweetSynopsis"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="Check out WellRead and this excellent synopsis of &quot;' + shortBookTitle + '&quot;!" data-via="VeryWellRead" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>';
+
     return "<tr><td class='votecell'><div class='vote'><input type='hidden' name='_id_' value=" + summaryID + "><a id='voteUp' class='vote-up-off' title='Vote Up!'></a><span itemprop='upvoteCount' class='vote-count-post' title='Vote Count'>" + votes + "</span><a id='voteDown' class='vote-down-off' title='Vote Down!'></a></div></td><td class='postcell'>" + summaryText + authorStamp + tweetSynopsis + "</td></tr>";
     //<tr class='summaryAuthorRow'><td></td><td class='summaryAuthor'>" + summaryAuthor + " (" + summaryTime + ")</td></tr>"; // used to be a seperate row, but this complicates sorting!
     // <a class='star-off'></a> disabled for now, no need for it - might eventually become 'my favourites'
 }
-
-var tweetSynopsis = '<p id="tweetSynopsis"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="Check out WellRead and this excellent book synopsis!" data-via="VeryWellRead" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>';
 
 // won't be applied for future items added to the page dynamically!
 //$("#voteUp").click(function() {
