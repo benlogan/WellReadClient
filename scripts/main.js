@@ -209,6 +209,30 @@ function getBestSellers() {
     }
 }
 
+function getBestSellersNyt() {
+    var listHtml = sessionStorage.getItem('bestSellersListNyt');
+
+    if(listHtml) {
+        $('#bestSellersNyt').append(listHtml);
+    } else {
+        // if they aren't in the session cache, fetch fresh
+        $.ajax({
+            url: hostname + 'topBooksNyt/',
+            type: 'GET',
+            success: function(data) {
+                var listHtml = "<ol>";
+                $.each(data, function(key, val) {
+                    listHtml += "<li><a href=?ASIN=" + val.asin + ">" + val.title + "</a>, " + val.author + "</li>";
+                });
+                listHtml += "</ol>";
+                $('#bestSellersNyt').append(listHtml);
+
+                sessionStorage.setItem('bestSellersListNyt', listHtml);
+            }
+        });
+    }
+}
+
 function getFeaturedBooks(category, friendlyCategory) {
     //var listHtml = sessionStorage.getItem('featuredBookList');
 
