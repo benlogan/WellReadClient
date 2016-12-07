@@ -1,4 +1,5 @@
 var loggedIn = false;
+var oAuthID_memory;
 
 function authTwitter() {
     //Using popup
@@ -10,7 +11,6 @@ function authTwitter() {
         //or use result.get|post|put|del|patch|me methods (see below)
         result.get('/1.1/account/verify_credentials.json?include_email=true').done(function(data) {
             processUserData(data.name);
-            // FIXME email is blank, why!? working on it, support query with twitter & oauth.io
             authUser(data.id, "T", data.name, data.email, oAuthToken, oAuthTokenSecret, data.screen_name);
         })
     })
@@ -50,6 +50,7 @@ function validateUser(oAuthID) {
         success: function(data) {
             console.log("Validate User Response. Name : " + data.name);
             loggedIn = true;
+            oAuthID_memory = data.oAuthID;
             processUserData(data.name);
         },
         error: function(data) {
@@ -60,6 +61,7 @@ function validateUser(oAuthID) {
 
 // on authentication attempt, check if the user already exists (i.e. session storage has been cleared), otherwise create them
 function authUser(oAuthID, oAuthMethod, name, email, oAuthToken, oAuthTokenSecret, screenName) {
+    oAuthID_memory = oAuthID;
     //console.log('oAuthToken : ' + oAuthToken);
     //console.log('oAuthTokenSecret : ' + oAuthTokenSecret);
     localStorage.setItem('oAuthID', oAuthID);
