@@ -5,7 +5,6 @@ $(function() {
     $( "#search" ).autocomplete({
         minLength: 3,
         delay: 500,
-      //source: availableTags
         source: autoCompleteFromServer,
         select: function (event, ui) {
             //alert($(this).val());
@@ -24,11 +23,7 @@ function autoCompleteFromServer(request, response) {
     var searchTerm = request.term;
     //console.log("Search Term : " + searchTerm);
 
-    //response([{ label: 'BOB', value: '123'  }]);
-
     // send to the server and get a list of book titles back
-    //http://127.0.0.1:1337/?q=freak
-
     $.ajax({
         url: hostname + 'bookSearch/',
         type: 'GET',
@@ -41,7 +36,7 @@ function autoCompleteFromServer(request, response) {
             if(Array.isArray(data)) {
                 for(var i = 0; i < data.length; i++) {
                     var newBookObject = new Object();
-                    newBookObject.label = data[i].title;
+                    newBookObject.label = data[i].title + ' (' + data[i].synopsis + ')';
                     newBookObject.isbn = data[i].isbn;
                     newBookObject.asin = data[i].asin;
                     formattedData.push(newBookObject);
