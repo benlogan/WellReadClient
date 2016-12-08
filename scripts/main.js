@@ -234,11 +234,12 @@ function getBestSellersNyt() {
 }
 
 function getFeaturedBooks(category, friendlyCategory) {
-    //var listHtml = sessionStorage.getItem('featuredBookList');
+    var listHtml = sessionStorage.getItem('featuredBookList_' + category);
 
-    //if(listHtml) {
-    //    $('#featured').append(listHtml);
-    //} else {
+    if(listHtml) {
+        $('#dropDownButton').text("Featured - " + friendlyCategory);
+        $('#featuredList').html(listHtml);
+    } else {
         // if they aren't in the session cache, fetch fresh
         $.ajax({
             url: hostname + 'booksFeatured/',
@@ -254,10 +255,10 @@ function getFeaturedBooks(category, friendlyCategory) {
                 listHtml += "</ol>";
                 $('#featuredList').html(listHtml);
 
-                //sessionStorage.setItem('featuredBookList', listHtml);
+                sessionStorage.setItem('featuredBookList_' + category, listHtml);
             }
         });
-    //}
+    }
 }
 
 // actually two rows! one for the author name
