@@ -409,9 +409,13 @@ function getScrapedSynopsis(URL, asin, isbn) {
         success: function(data) {
             //console.log("Scraper Response : " + data.SynopsisAmazon);
 
-            var summaryRowsHtml = createSummaryTableRow(data.SynopsisIdAmazon, new Date(), data.SynopsisAmazon, 'Amazon', 0);
-            //if(data.SynopsisAmazon != data.SynopsisWaterstones) { // not the right place for this logic - it has already been written to the DB anyway!
-            summaryRowsHtml += createSummaryTableRow(data.SynopsisIdWaterstones, new Date(), data.SynopsisWaterstones, 'Waterstones', 0);
+            var summaryRowsHtml = '';
+            if(data.SynopsisAmazon) {
+              summaryRowsHtml += createSummaryTableRow(data.SynopsisIdAmazon, new Date(), data.SynopsisAmazon, 'Amazon', 0);
+            }
+            if(data.SynopsisWaterstones) {
+              summaryRowsHtml += createSummaryTableRow(data.SynopsisIdWaterstones, new Date(), data.SynopsisWaterstones, 'Waterstones', 0);
+            }
 
             $('#LoadingImage').hide();
             $('#summaryTable').html(summaryRowsHtml);
