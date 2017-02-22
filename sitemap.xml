@@ -12,6 +12,9 @@
   <loc>http://www.wellread.eu/index.html</loc>
   <changefreq>daily</changefreq>
 </url>
+<url><loc>http://www.wellread.eu/about.html</loc></url>
+<url><loc>http://www.wellread.eu/synopsis.html</loc></url>
+<url><loc>http://www.wellread.eu/newsletter.html</loc></url>
 <url><loc>http://www.wellread.eu/?ASIN=7190409</loc></url>
 <url><loc>http://www.wellread.eu/?ASIN=8197032</loc></url>
 <url><loc>http://www.wellread.eu/?ASIN=91816971</loc></url>
