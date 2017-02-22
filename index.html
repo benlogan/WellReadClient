@@ -20,6 +20,7 @@
 
         <script type="text/javascript" src="scripts/jquery/jquery-2.1.4.js"></script>
         <script type="text/javascript" src="scripts/jquery/jquery-ui.js"></script>
+
         <script type="text/javascript" src="scripts/main.js"></script>
         <script type="text/javascript" src="scripts/dropdown.js"></script>
 
@@ -31,6 +32,8 @@
         <script type="text/javascript" src="scripts/auth.js"></script>
 
         <script type="text/javascript" src="scripts/jquery.blockUI.js"></script>
+
+        <!--<script type="text/javascript" src="scripts/jquery.mobile-1.4.5.min.js"></script>-->
 
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -87,6 +90,16 @@
                     getBestSellersNyt();
                     getFeaturedBooks("management", "Management ↓");
                 }
+
+                /*
+                $("#carouselFeaturedBooks").swiperight(function() {
+                    $("#carouselFeaturedBooks").carousel('prev');
+                });
+                $("#carouselFeaturedBooks").swipeleft(function() {
+                    $("#carouselFeaturedBooks").carousel('next');
+                });
+                */
+
             });
 
             function getParameterByName(name, url) {
@@ -153,7 +166,7 @@
     <link rel="icon" type="image/png" href="images/favicon.png">
     <body>
 
-        <a id="loginOrName" href="#authBox" class="btn" onclick="ga('send', 'event', 'Buttons', 'Login', 'User clicked oauth login button.')">Login</a>
+        <a id="loginOrName" href="#authBox" class="btn" onclick="ga('send', 'event', 'Buttons', 'Login', 'User clicked oauth login button.')">LOGIN</a>
 
         <div id="authBox" class="popupContainer" style="display: none">
             <a class="btn btn-block btn-social btn-twitter" onclick="authTwitter()">
@@ -167,51 +180,84 @@
             </a>
         </div>
 
+        <div id='siteHeaderBox'>
+            <a id="siteHeaderLink" href="./">
+            <!--<img id="siteIcon" src="images/favicon.png">-->
+            <h1 id="siteHeader">WELLREAD</h1>
+            </a>
+        </div>
+
         <!-- Using jQuery UI, but we could consider bootstrap etc -->
         <div id='searchBox' class="ui-widget">
-            <div id='headerBox'>
-                <a href="./">
-                <img id="siteIcon" src="images/favicon.png">
-                <h1 id="siteHeader">WellRead</h1>
-                </a>
-            </div>
-
             <!--<label for="search">Search: </label>-->
             <!--<button id="closeButton" data-toggle="collapse" data-target="#promoText"><img src="images/toggle-collapse-alt_blue.png"/></button>-->
             <div id="promoText" class="collapse">Welcome to Well Read! We provide a community generated and curated selection of excellent, high quality, book summaries. If you are looking for an independently generated, accurate and complete book synopsis, we can help. You can vote for your favourite, or least-favourite, synopsis. Of course, you can also contribute yourself! We want to help you quickly and easily discover the key points for a particular book, without necessarily having to read the whole thing. If the book is of real interest and you want to know more, then we'd recommend you read the whole thing and you can purchase it directly from Well Read. <a href="#promoText" data-toggle="collapse" onclick="hidePromoText()">Hide text!</a></div>
 
-            <h5 class="centeredText">Search for a book...</h5>
-            <input id="search" onclick="ga('send', 'event', 'Input', 'Search', 'User clicked in the main search box.')"> <!-- class="ui-autocomplete-input" -->
+            <h5 class="centeredText">DISCOVER INTERESTING NEW BOOKS TO READ, OR NOT</h5>
+            <!--<h5 class="centeredText">Search for a book...</h5>-->
+            <input id="search" placeholder="SEARCH FOR A BOOK..." onclick="ga('send', 'event', 'Input', 'Search', 'User clicked in the main search box.')"> <!-- class="ui-autocomplete-input" -->
         </div>
 
         <div id="topBooks">
-            <div id="featured">
-                <div class="dropdown">
-                    <h3><button id="dropDownButton" onclick="myDropDown()" class="dropbtn">Featured - Management</button></h3>
-                    <div id="myDropdown" class="dropdown-content">
-                        <a onclick="getFeaturedBooks('management','Management ↓')">Management</a>
-                        <a onclick="getFeaturedBooks('programming','Programming ↓')">Programming</a>
-                        <a onclick="getFeaturedBooks('classics','Classics ↓')">Classics</a>
+          <!--
+          <div id="carouselFeaturedBooks" class="carousel slide" data-ride="carousel" data-interval='false'>
+            <ol class="carousel-indicators">
+              <li data-target="#carouselFeaturedBooks" data-slide-to="0" class="active"></li>
+              <li data-target="#carouselFeaturedBooks" data-slide-to="1"></li>
+              <li data-target="#carouselFeaturedBooks" data-slide-to="2"></li>
+              <li data-target="#carouselFeaturedBooks" data-slide-to="3"></li>
+              <li data-target="#carouselFeaturedBooks" data-slide-to="4"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">-->
+              <div class="item active">
+                <div id="featured">
+                    <div class="dropdown">
+                        <h3><button id="dropDownButton" onclick="myDropDown()" class="dropbtn">Featured - Management</button></h3>
+                        <div id="myDropdown" class="dropdown-content">
+                            <a onclick="getFeaturedBooks('management','Management ↓')">Management</a>
+                            <a onclick="getFeaturedBooks('programming','Programming ↓')">Programming</a>
+                            <a onclick="getFeaturedBooks('classics','Classics ↓')">Classics</a>
+                        </div>
                     </div>
+                    <div id="featuredList"></div>
                 </div>
-                <div id="featuredList"></div>
+              </div>
+              <div class="item">
+                <div id="mostRecent">
+                    <h3 class="centeredText">Most Recent</h3>
+                    <h6 class="updatedDate"/>
+                </div>
+              </div>
+              <div class="item">
+                <div id="mostRead">
+                    <h3 class="centeredText">Most Read</h3>
+                    <h6 class="updatedDate"/>
+                </div>
+              </div>
+              <div class="item">
+                <div id="bestSellers">
+                    <h3 class="centeredText">Best Sellers (Amazon)</h3>
+                    <h6 class="updatedDate"/>
+                </div>
+              </div>
+              <div class="item">
+                <div id="bestSellersNyt">
+                    <h3 class="centeredText">Best Sellers (NYT)</h3>
+                    <h6 class="updatedDate"/>
+                </div>
+              </div><!--
             </div>
-            <div id="mostRecent">
-                <h3 class="centeredText">Most Recent</h3>
-                <h6 class="updatedDate"/>
-            </div>
-            <div id="mostRead">
-                <h3 class="centeredText">Most Read</h3>
-                <h6 class="updatedDate"/>
-            </div>
-            <div id="bestSellers">
-                <h3 class="centeredText">Best Sellers (Amazon)</h3>
-                <h6 class="updatedDate"/>
-            </div>
-            <div id="bestSellersNyt">
-                <h3 class="centeredText">Best Sellers (NYT)</h3>
-                <h6 class="updatedDate"/>
-            </div>
+          </div>-->
+          <!--carousel-control-prev-->
+          <!--
+          <a class="left carousel-control" href="#carouselFeaturedBooks" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carouselFeaturedBooks" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>-->
         </div>
 
         <div id="bookBox" hidden="true">
@@ -228,16 +274,13 @@
                     <h5 id='bookPublisher'></h5>
                     <h5 id='bookISBN'></h5>
                     <h5 id='bookASIN'></h5>
+                    <!--
                     <div id='purchaseBook'>
                         <a id='bookPurchaseLink' target="_blank">
                             <img id='bookPurchaseImage' src="images/234_60_stones.gif">
                         </a>
-                        <!--
-                        <a id='bookPurchaseLink' target="_blank">
-                            <img id='bookPurchaseImage' src="images/234x60_foyles.png">
-                        </a>
-                        -->
                     </div>
+                    -->
                 </div>
             </div>
 
@@ -270,11 +313,11 @@
 
             <!-- User Input -->
             <div id='summaryInput'>
-                <h5>Add your own summary...</h5>
+                <h5>WRITE YOUR OWN SUMMARY...</h5>
                 <form id="SummaryText"> <!-- onsubmit="return writeSummaryInput();" -->
                     <!-- style using normal sizes, otherwise font size changes things rows="5" cols="100"-->
                     <textarea id="SummaryTextArea" maxlength="5000" onclick="editText()"></textarea>
-                    <input id="submit-button" type="submit" value="Submit" tabindex="110" style="font-family: 'helvetica neue'">
+                    <input id="submit-button" type="submit" value="SUBMIT" tabindex="110">
                 </form>
             </div>
         </div>
@@ -284,6 +327,7 @@
         <a href="https://twitter.com/VeryWellRead" target="_blank"><img class="socialIcon" src="images/icon_twitter.png"></a>
         <a href="https://plus.google.com/+WellreadEu" target="_blank"><img class="socialIcon" src="images/icon_google.png"></a>
     </footer>
+    <hr id="footerRule">
     <footer>
         <a class='footerTextLink' href="about.html">About</a>
         <a class='footerTextLink' href="privacy.html">Privacy</a>

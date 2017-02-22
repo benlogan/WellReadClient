@@ -65,7 +65,7 @@ function getBookDetails(asin) {
             var obj = data;
 
             // pass it straight to the page...
-            $('#bookTitle').html(obj.book.title);
+            $('#bookTitle').html(obj.book.title.toUpperCase());
             document.title = obj.book.title;
 
             var authorList = '';
@@ -82,9 +82,9 @@ function getBookDetails(asin) {
                 // single author, non array
                 authorList = obj.book.author;
             }
-            $('#bookAuthor').html(authorList);
+            $('#bookAuthor').html(authorList.toUpperCase());
 
-            $('#bookPublisher').html(obj.book.publisher);
+            $('#bookPublisher').html(obj.book.publisher.toUpperCase());
             $('#bookISBN').html(obj.book.isbn + ' (ISBN)');
             $('#bookASIN').html(obj.book.asin);
             $('#bookImage').attr('src', obj.book.image);
@@ -97,7 +97,7 @@ function getBookDetails(asin) {
             if(!loggedIn) {
                 //$("#SummaryText :input").prop("disabled", true);
                 $('#SummaryText').block({
-                    message: '<a id="loginOrNameBox" href="#authBox" class="btn" onclick="ga(\'send\', \'event\', \'Buttons\', \'Login\', \'User clicked oauth login button.\')">Please Login</a>',
+                    message: '<a id="loginOrNameBox" href="#authBox" class="btn" onclick="ga(\'send\', \'event\', \'Buttons\', \'Login\', \'User clicked oauth login button.\')">LOGIN</a>',
                     css: { border: '1px solid #000' }
                 });
                 $("#loginOrNameBox").leanModal(); // important - must attach the lean modal
@@ -269,7 +269,12 @@ function createSummaryTableRow(summaryID, summaryTime, summaryText, summaryAutho
     var shortBookTitle = document.title.substring(0,27) + "...";// truncated for use in a tweet
     var tweetSynopsis = '<p id="tweetSynopsis"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="Check out WellRead and this excellent synopsis of &quot;' + shortBookTitle + '&quot;!" data-via="VeryWellRead" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>';
 
-    return "<tr><td class='votecell'><div class='vote'><input type='hidden' name='_id_' value=" + summaryID + "><a id='voteUp' class='vote-up-off' title='Vote Up!'></a><span itemprop='upvoteCount' class='vote-count-post' title='Vote Count'>" + votes + "</span><a id='voteDown' class='vote-down-off' title='Vote Down!'></a></div></td><td class='postcell'>" + summaryText + authorStamp + tweetSynopsis + "</td></tr>";
+    // voting column;
+    var voting = "<td class='voteCell'><div class='vote'><input type='hidden' name='_id_' value=" + summaryID + "><a id='voteUp' class='vote-up-off' title='Vote Up!'></a><span itemprop='upvoteCount' class='vote-count-post' title='Vote Count'>" + votes + "</span><a id='voteDown' class='vote-down-off' title='Vote Down!'></a></div></td>";
+    // <td class='postcell'>" + summaryText + authorStamp + tweetSynopsis + "</td>
+    return "<tr class='summaryRow'><td colspan='3'>" + summaryText + "</td></tr>"
+      + "<tr class='footerRow'><td class='tweetCell'>" + tweetSynopsis + "</td>" + voting + "<td class='authorCell'>" + authorStamp + "</td></tr>";
+
     //<tr class='summaryAuthorRow'><td></td><td class='summaryAuthor'>" + summaryAuthor + " (" + summaryTime + ")</td></tr>"; // used to be a seperate row, but this complicates sorting!
     // <a class='star-off'></a> disabled for now, no need for it - might eventually become 'my favourites'
 }

@@ -1,7 +1,9 @@
 body {
     /*font-family: "Lucida Grande"; just allow helvetica from bootstrap */
+    font-family: "Helvetica Neue";/* specifiy, otherwise we inherit from bootstrap! */
     /*font-size: 50px;*/
-    width: 350px; /* was 960 before mobile testing, 350 after. need a basic media query here*/
+    /* width: 350px; */
+    /* was 960 before mobile testing, 350 after. need a basic media query here*/
     margin: 0 auto;
     padding: 5px;
     /*
@@ -11,9 +13,50 @@ body {
     */
 }
 
-@media only screen and
-    (min-width: 768px) {
-        body {width: 800px;}
+@media screen and (max-width: 768px) {
+    body {
+      width: 90%;
+    }
+    #bookMetadataRight {
+      /* no margin or padding, take full width */
+    }
+    #searchBox {
+      width: 90%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    body {
+      width: 50%;
+    }
+    #bookMetadataRight {
+        margin-left: 35%;
+        padding-left: 50px;
+    }
+    .bookCoverImage {
+      float: left;
+    }
+    #searchBox {
+      width: 70%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #topBooks {
+      width: 95%;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 1400px) {
+    #topBooks {
+      width: 90%;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    #topBooks {
+      width: 70%;
+    }
 }
 
 .centeredText {
@@ -47,13 +90,20 @@ body {
 }
 
 #search {
+    font-family: inherit;
+    font-size: 14px;
     width: 100%;
 }
 
 #searchBox {
-    width: 50%;
+    /* width: 50%; */
     margin: 0 auto;
     font-family: inherit; /* we don't want to let jquery ui change this */
+}
+
+#footerRule {
+  width: 50%;
+  border-color: black;
 }
 
 #loginOrName {
@@ -66,7 +116,8 @@ body {
 }
 
 #topBooks {
-    width: 50%;
+    /* width: 50%; */
+    /* needs to be much greater on mobile, more like 90% */
     margin: 0 auto;
     border-style: solid;
     border-width: thin;
@@ -81,19 +132,29 @@ body {
 
 #bookMetadata {
     /*overflow:auto; *//* needed to auto grow the div to match the size of the floated image within it */
-    display: flex;
+    /* display: flex; */
     padding-top: 15px;
+    /* padding-left: 80px; */ /* to match width of voting column, just looks neater! */
 }
+
 #bookMetadataLeft {
     /* needs a hardcoded max size, because some small images will result in right-hand text being truncated.
        this sort of works, but not all of the time - needs more testing FIXME */
     /*min-height: 350px;*/
 }
+
+/*
 #bookMetadataRight {
-    /*margin-left: 35%;*/ /* was 150px, but really just want it to be half of the parent */
+    margin-left: 35%;
     padding-left: 50px;
-    position: relative; /* just so that I can bottom align the price button */
+    position: relative; // just so that I can bottom align the purchase button
 }
+*/
+
+#bookTitle {
+  /* text-align: justify; */
+}
+
 #purchaseBook {
     position: absolute;
     bottom: 0;
@@ -107,25 +168,35 @@ body {
 
 #SummaryTextArea {
     font-size: 16px;
-    width: 98%;
+    width: 100%; /* why was this 98%, any reason? */
     height: 200px;
-    /* text areas come with an extra 6px! 2 padding and 1 border on either side, so 100% will breach your design */
+    /* text areas come with an extra 6px! 2 padding and 1 border on either side, so 100% will breach your design - is this still true? */
 }
 
 #summaryTable {
     width: 100%;
-    table-layout: fixed;
+    /* table-layout: fixed; */ /* auto calculating cell widths that I want to specify! */
 }
+
 #summaryTable tr > td {
-    padding-top: 50px;
-    padding-bottom: 50px;
     white-space: pre-wrap; /* critical for respecting new lines in the summaries */
     font-size: x-large;
     font-weight: 200;
     text-align: justify;
-    border-bottom: black;
-    border-bottom-style: solid;
-    border-bottom-width: thin;
+}
+
+.summaryRow td {
+  padding-top: 50px;
+  padding-bottom: 10px;
+}
+
+.footerRow td {
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  border-bottom: black;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
 }
 
 #summaryAuthor {
@@ -134,8 +205,8 @@ body {
     padding-top: 20px;
 }
 
-#headerBox {
-    width: 60%;
+#siteHeaderBox {
+    /* width: 60%; */
     margin: 0 auto;
 }
 #siteIcon {
@@ -143,7 +214,14 @@ body {
     width: 50px;
 }
 #siteHeader {
-    float; right;
+    font-family: "Garamond";
+    letter-spacing: 5px;
+    /* N/A when not using an image/icon, but we need a center align instead */
+    /*float; right;*/
+    text-align: center;
+}
+#siteHeaderLink {
+  color: black;
 }
 
 input, textarea, select, h1, h2{font-family:inherit;}
@@ -153,6 +231,23 @@ input, textarea, select, h1, h2{font-family:inherit;}
     margin: auto;
 }
 
+.tweetCell {
+  width: 10%;
+}
+
+.voteCell {
+  width: 5%;
+}
+
+.authorCell {
+  width: 85%;
+}
+
+#tweetSynopsis {
+  height: 18px; /* total hack! */
+}
+
+/*
 .votecell {
     width: 10%;
     padding-top: 15px;
@@ -160,6 +255,8 @@ input, textarea, select, h1, h2{font-family:inherit;}
 .postcell {
     width: 90%;
 }
+*/
+
 .vote {
     text-align: center;
 }
@@ -210,8 +307,10 @@ a {
 }
 
 .bookCoverImage {
-    float: left;
     width: 234px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 #lean_overlay {
@@ -272,11 +371,10 @@ footer {
     /*position: absolute;
     left: 0;
     bottom: 0;*/
-    height: 50px;
+    height: 150px;
     width: 100%;
     text-align: center;
     padding-top: 50px;
-    padding-bottom: 50px;
 }
 .footerTextLink {
   padding-right: 30px;
