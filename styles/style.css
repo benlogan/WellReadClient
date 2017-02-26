@@ -1,11 +1,13 @@
 body {
     /*font-family: "Lucida Grande"; just allow helvetica from bootstrap */
-    font-family: "Helvetica Neue";/* specifiy, otherwise we inherit from bootstrap! */
+    font-family: "Helvetica Neue", "Arial";/* specifiy, otherwise we inherit from bootstrap! */
     /*font-size: 50px;*/
     /* width: 350px; */
     /* was 960 before mobile testing, 350 after. need a basic media query here*/
+
     margin: 0 auto;
     padding: 5px;
+
     /*
     auto margin is important, this is what centers the body on a larger screen
     margin-left: 5px;
