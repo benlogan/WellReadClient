@@ -1,4 +1,5 @@
-var hostname = 'http://wellreadserver.herokuapp.com/';
+var hostname = 'http://data.wellread.eu/';
+//var hostname = 'http://wellreadserver.herokuapp.com/';
 //var hostname = 'http://127.0.0.1:1337/';
 
 $(function() {
@@ -330,15 +331,19 @@ function sortTable(tableElementId) {
     var store = [];
     for(var i=0, len=tbl.rows.length; i<len; i++) {
         var row = tbl.rows[i];
+        var footerRow = tbl.rows[i+1];
 
-        var sortnr = parseFloat(row.cells[0].getElementsByClassName('vote-count-post').item(0).textContent);
-        //var sortnr = parseFloat(row.cells[0].textContent || row.cells[0].innerText);
+        // a bit messy, we need to bundle the two rows representing a book and sort them as one...
+        if(row.className == 'summaryRow') {
+          var sortnr = parseFloat(footerRow.cells[1].getElementsByClassName('vote-count-post').item(0).textContent);
+          console.log('FOUND A FOOTER ROW : ' + sortnr);
 
-        if(!isNaN(sortnr)) store.push([sortnr, row]);
+          if(!isNaN(sortnr)) store.push([sortnr, row]);
+          if(!isNaN(sortnr)) store.push([sortnr, footerRow]);
+        }
     }
     store.sort(function(x,y) {
         return y[0] - x[0]; // we want descending...
-        //return x[0] - y[0];
     });
     for(var i=0, len=store.length; i<len; i++) {
         tbl.appendChild(store[i][1]);
