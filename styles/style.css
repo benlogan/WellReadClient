@@ -34,6 +34,7 @@ body {
     #bookMetadataRight {
         margin-left: 35%;
         padding-left: 50px;
+        height: 370px; /* hack - just to force the loading image down */
     }
     .bookCoverImage {
       float: left;
@@ -72,6 +73,7 @@ body {
 .updatedDate {
     text-align: center;
 }
+
 #promoText {
     text-align: justify;
     clear: both;
@@ -80,6 +82,10 @@ body {
 #LoadingImage {
     display: block;
     margin: 0 auto;
+}
+
+#LoadingImageDiv {
+    text-align: center;
 }
 
 #myDropdown {
