@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <title>WellRead - Browse and search thousands of book summaries, vote for your favourite and add a new synopsis!</title>
+        <base href="http://www.wellread.eu" /> <!-- needed to support apache redirection, otherwise relative links are broken -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="WellRead is a community website featuring many excellent, high quality, book summaries. If you are looking for an independently generated, accurate and complete book synopsis, we can help. You can vote for your favourite, or least-favourite, synopsis. Of course, you can also contribute yourself! We want to help you quickly and easily discover the key points for a particular book, without having to read the whole book. If the book is of real interest and you want to know more, we'd recommend you read the whole thing and you can purchase it directly from WellRead.">
@@ -75,6 +76,8 @@
                 if(!localStorage.getItem('promoHidden') || localStorage.getItem('promoHidden') == 'false') {
                     $('#promoText').addClass('in');
                 }
+
+                console.log(this.href.substr(this.href.lastIndexOf('/') + 1));
 
                 //if(window.location.href.indexOf("ISBN=") > -1) {
                 var startingISBN = getParameterByName("ASIN");

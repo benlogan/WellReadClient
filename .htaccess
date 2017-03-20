@@ -1,2 +1,2 @@
 RewriteEngine On    # Turn on the rewriting engine
-RewriteRule    ^books/(.*)/?$    index.html?TITLE=$1    [NC,L]    # Handle requests for "books/book-title/"
+RewriteRule    ^books/(.*)?$    index.html?TITLE=$1    [NC,L]    # Handle requests for "books/book-title"
