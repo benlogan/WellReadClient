@@ -1,0 +1,2 @@
+RewriteEngine On    # Turn on the rewriting engine
+RewriteRule    ^books/?$    index.html    [NC,L]    # Handle requests for "books"

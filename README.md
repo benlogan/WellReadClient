@@ -2,4 +2,4 @@
 
 Take a look at the app...
 
-http://wellread.eu
+http://www.wellread.eu
