@@ -77,7 +77,11 @@
                     $('#promoText').addClass('in');
                 }
 
-                console.log(this.href.substr(this.href.lastIndexOf('/') + 1));
+                var friendlyBookUrl = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+                // or this.URL?
+                if(friendlyBookUrl) {
+                    console.log("friendlyBookUrl : " + friendlyBookUrl);
+                }
 
                 //if(window.location.href.indexOf("ISBN=") > -1) {
                 var startingISBN = getParameterByName("ASIN");
