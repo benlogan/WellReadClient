@@ -49,6 +49,17 @@ function autoCompleteFromServer(request, response) {
     });
 }
 
+function getBookID(title) {
+  $.ajax({
+      url: hostname + 'bookLookupTitle/',
+      type: 'GET',
+      data: 'TITLE=' + title,
+      success: function(data) {
+          console.log("ASIN retrieved : " + data.ASIN);
+      }
+  });
+}
+
 function getBookDetails(asin) {
     $('#topBooks').hide();
     $.ajax({
