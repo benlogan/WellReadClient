@@ -55,7 +55,6 @@ function getBookID(title) {
       type: 'GET',
       data: 'TITLE=' + title,
       success: function(data) {
-          console.log("ASIN retrieved : " + data.isbn);
           getBookDetails(data.isbn);
       }
   });
